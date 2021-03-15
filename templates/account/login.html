@@ -8,150 +8,354 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Sign In</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-            }
-            a{
-                text-decoration: none;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            min-height: 100vh;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            font-family: "Raleway";
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            position: relative;
+            display: flex;
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background: #040427;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wave {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #132252;
+        }
+
+        .wave span {
+            position: absolute;
+            width: 325vh;
+            height: 325vh;
+            top: 0;
+            left: 50%;
+            background: #040427;
+            transform: translate(-50%, -75%);
+        }
+
+        .wave span:nth-child(1) {
+            animation: animate 5s linear infinite;
+            border-radius: 50%;
+            background: rgba(20, 20, 20, 1);
+        }
+
+        .wave span:nth-child(2) {
+            animation: animate 10s linear infinite;
+            border-radius: 43%;
+            background: rgba(20, 20, 20, 0.5);
+        }
+
+        .wave span:nth-child(3) {
+            animation: animate 15s linear infinite;
+            border-radius: 45%;
+            background: rgba(20, 20, 20, 0.5);
+        }
+
+        @keyframes animate {
+            0% {
+                transform: translate(-50%, -75%) rotate(0deg);
             }
 
-            body {
-                min-height: 100vh;
-                -webkit-box-align: center;
-                -ms-flex-align: center;
-                align-items: center;
-                font-family: "Raleway";
-                -webkit-box-pack: center;
-                -ms-flex-pack: center;
-                justify-content: center;
-                position: relative;
-                display: flex;
-                width: 100%;
-                overflow-x: hidden;
-                overflow-y: hidden;
-                background: #040427;
-                align-items: center;
-                justify-content: center;
+            100% {
+                transform: translate(-50%, -75%) rotate(360deg);
             }
+        }
 
-            .wave {
-                position: absolute;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: #132252;
-            }
+        .btn {
+            display: flex;
+            color: white;
+            border: none;
+            outline: none;
+            font-size: 24px;
+            font-weight: 200;
+            width: 300px;
+            height: 60px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            border-radius: 200px;
+            letter-spacing: 2px;
+            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+            0 1px 2px rgba(0, 0, 0, 0.24);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(0, 0, 0, 0.24);
+            -webkit-transition: all 0.2s ease-in;
+            transition: all 0.2s ease-in;
+        }
 
-            .wave span {
-                position: absolute;
-                width: 325vh;
-                height: 325vh;
-                top: 0;
-                left: 50%;
-                background: #040427;
-                transform: translate(-50%, -75%);
-            }
+        .btn:hover {
+            cursor: pointer;
+        }
 
-            .wave span:nth-child(1) {
-                animation: animate 5s linear infinite;
-                border-radius: 50%;
-                background: rgba(20, 20, 20, 1);
-            }
+        .btn span a {
+            z-index: 2;
+            display: flex;
+            padding: 10px 20px;
+            position: relative;
+            text-decoration: none;
+            color: white;
+        }
 
-            .wave span:nth-child(2) {
-                animation: animate 10s linear infinite;
-                border-radius: 43%;
-                background: rgba(20, 20, 20, 0.5);
-            }
+        .btn::after {
+            top: -50%;
+            z-index: 1;
+            content: "";
+            width: 150%;
+            height: 200%;
+            position: absolute;
+            left: calc(-150% - 40px);
+            background-color: rgba(255, 255, 255, 0.2);
+            -webkit-transform: skewX(-40deg);
+            transform: skewX(-40deg);
+            -webkit-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+        }
 
-            .wave span:nth-child(3) {
-                animation: animate 15s linear infinite;
-                border-radius: 45%;
-                background: rgba(20, 20, 20, 0.5);
-            }
+        .btn:hover::after {
+            -webkit-transform: translateX(100%) skewX(-30deg);
+            transform: translateX(100%) skewX(-30deg);
+        }
 
-            @keyframes animate {
-                0% {
-                    transform: translate(-50%, -75%) rotate(0deg);
-                }
+        .btn.active {
+            -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3),
+            0 15px 12px rgba(0, 0, 0, 0.22);
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+        }
 
-                100% {
-                    transform: translate(-50%, -75%) rotate(360deg);
-                }
-            }
+        .btn img {
+            height: 40px;
+            width: 40px;
+        }
 
-            .btn {
-                display: flex;
-                color: white;
-                border: none;
-                outline: none;
-                font-size: 24px;
-                font-weight: 200;
-                width: 300px;
-                height: 60px;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-                position: relative;
-                border-radius: 200px;
-                letter-spacing: 2px;
-                -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-                0 1px 2px rgba(0, 0, 0, 0.24);
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(0, 0, 0, 0.24);
-                -webkit-transition: all 0.2s ease-in;
-                transition: all 0.2s ease-in;
-            }
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
-            .btn:hover {
-                cursor: pointer;
-            }
+        .menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            cursor: pointer;
+            z-index: 200;
+        }
 
-            .btn span a {
-                z-index: 2;
-                display: flex;
-                padding: 10px 20px;
-                position: relative;
-                text-decoration: none;
-                color: white;
-            }
+        .menu span {
+            position: relative;
+            display: block;
+            width: 50%;
+            height: 2px;
+            background-color: black;
+            float: left;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            z-index: 200;
+        }
 
-            .btn::after {
-                top: -50%;
-                z-index: 1;
-                content: "";
-                width: 150%;
-                height: 200%;
-                position: absolute;
-                left: calc(-150% - 40px);
-                background-color: rgba(255, 255, 255, 0.2);
-                -webkit-transform: skewX(-40deg);
-                transform: skewX(-40deg);
-                -webkit-transition: all 0.2s ease-out;
-                transition: all 0.2s ease-out;
-            }
+        .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+        }
 
-            .btn:hover::after {
-                -webkit-transform: translateX(100%) skewX(-30deg);
-                transform: translateX(100%) skewX(-30deg);
-            }
+        .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(5px);
+            transform: translateY(5px);
+        }
 
-            .btn.active {
-                -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3),
-                0 15px 12px rgba(0, 0, 0, 0.22);
-                box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-            }
+        #menu {
+            display: none;
+        }
 
-            .btn img {
-                height: 40px;
-                width: 40px;
-            }
-        </style>
+        #menu:checked ~ .menu {
+            background-color: transparent;
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span {
+            background-color: white;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(1px) rotate(45deg);
+            transform: translateY(1px) rotate(45deg);
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(2) {
+            display: none;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(-1px) rotate(-45deg);
+            transform: translateY(-1px) rotate(-45deg);
+        }
+
+        #menu:checked ~ .nav {
+            left: 0px;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+        }
+
+        #menu:checked ~ main {
+            -webkit-transform: translateX(250px);
+            transform: translateX(250px);
+            -webkit-transition: -webkit-transform 500ms ease;
+            transition: -webkit-transform 500ms ease;
+            transition: transform 500ms ease;
+            transition: transform 500ms ease, -webkit-transform 500ms ease;
+        }
+
+        .nav {
+
+            position: fixed;
+            top: 0;
+            left: -310px;
+            width: 300px;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: grey;
+            font-size: 0.8em;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+            z-index: 2;
+        }
+
+        .nav ul {
+            position: relative;
+            list-style-type: none;
+            margin: 150px 0;
+            padding: 0;
+        }
+
+        .nav ul li {
+            position: relative;
+            display: block;
+            position: relative;
+            margin: 2em 0;
+        }
+
+        .nav ul li a {
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 15px 20px;
+            color: white;
+            line-height: 4em;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .nav ul li.active a {
+            color: white;
+        }
+
+        .nav ul li:not(.active)::after {
+            opacity: 0.2;
+        }
+
+        .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .nav ul li::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 0.2em;
+            background: black;
+            left: 0;
+            bottom: 0;
+            background-image: -webkit-gradient(
+                    linear,
+                    left top,
+                    right top,
+                    from(grey),
+                    to(black)
+            );
+            background-image: linear-gradient(to right, grey, black);
+        }
+
+    </style>
 </head>
 <body>
+<input type="checkbox" id="menu"/>
+
+<label for="menu" class="menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</label>
+<nav class="nav">
+    <ul>
+        <li class="#"><a href="{% url 'home' %}">Home</a></li>
+        {% if user.is_authenticated == False %}
+            <li class="active"><a href="">Login</a></li>
+        {% endif %}
+        <li><a href="#">Market</a></li>
+        <li><a href="#">Trade portal</a></li>
+        <li><a href="#">Transactions</a></li>
+        {% if user.is_authenticated == True %}
+            <li class="#"><a href="accounts/logout">Logout</a></li>
+        {% endif %}
+    </ul>
+</nav>
 <div class="wave">
     <span></span>
     <span></span>

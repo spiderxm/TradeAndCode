@@ -1,116 +1,1681 @@
+{% load account %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Loading...</title>
-    <link rel="stylesheet" href="./loader.css"/>
+    <title>Home</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./home.css"/>
+    <link rel="stylesheet" href="./downArrow.css"/>
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="./timelineCard.css"/>
+    <link rel="stylesheet" href="./footer.css"/>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: consolas;
-        }
-
-        body {
-            display: flex;
-            overflow: hidden;
-            min-height: 100vh;
-            background: #01011d;
-        }
-
-        .container {
-            margin: 20px;
-            width: 100%;
-            height: 95vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            border: 1px solid cyan;
-            background: #05011d;
-        }
-
-        .bar {
-            width: 100%;
-            height: 50px;
-            top: 30px;
-            right: 40px;
+        .arrow-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
             position: absolute;
-            display: flex;
-            align-content: flex-start;
-            justify-content: flex-end;
-        }
-
-        .bar h3 {
-            color: #03e9f4;
-            font-size: 30px;
-        }
-
-        .bar h3 span {
-            color: rgba(182, 0, 0, 0.856);
-        }
-
-        .loader {
-            position: relative;
-            -webkit-box-reflect: below 1px linear-gradient(transparent, #0002);
-        }
-
-        .loader::before {
-            content: "";
-            position: absolute;
-            top: 0;
+            bottom: 25px;
+            left: 0;
             right: 0;
-            width: 2px;
-            height: 100%;
-            background: cyan;
-            animation: blinkCursor 0.8s steps(3) infinite;
+            z-index: 1;
         }
 
-        @keyframes blinkCursor {
-            0%,
-            70% {
-                opacity: 1;
+        .arrow-container:hover {
+            cursor: pointer;
+        }
+
+        .arrow-1 {
+            width: 100px;
+            height: 100px;
+            background: #00bcd4;
+            opacity: 0.5;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .arrow-2 {
+            width: 60px;
+            height: 60px;
+            background: #00bbd47c;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1;
+            display: table;
+        }
+
+        .arrow-2:before {
+            width: 52px;
+            height: 52px;
+            content: "";
+            border: 2px solid black;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+
+        .arrow-2 i {
+            font-size: 30px;
+            display: table-cell;
+            position: relative;
+            vertical-align: middle;
+            text-align: center;
+            color: black;
+        }
+
+        /* Custom Animate.css */
+
+        .animated .hinge {
+            -webkit-animation-duration: 2s;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale3d(0.4, 0.4, 0.4);
+                transform: scale3d(0.4, 0.4, 0.4);
             }
-            90%,
+
+            50% {
+                opacity: 0.5;
+            }
+
             100% {
                 opacity: 0;
             }
         }
 
-        .loader h2 {
-            position: relative;
-            color: #03e9f4;
-            letter-spacing: 5px;
-            font-size: 3em;
-            text-transform: lowercase;
-            animation: typing 5s steps(12) infinite;
-            overflow: hidden;
+        .zoomIn {
+            -webkit-animation-name: zoomIn;
+            animation-name: zoomIn;
         }
 
-        @keyframes typing {
-            0%,
-            90%,
-            100% {
-                width: 0;
-            }
-            30%,
-            60% {
-                width: 400.69px;
+
+        footer {
+            height: 10vh;
+            background-color: rgba(13, 164, 175, 0.7);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .contacts {
+            width: 50%;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .contacts h3 {
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .contacts ul {
+            list-style: none;
+            margin-top: 10px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .social {
+            margin: 0;
+            padding: 0;
+            width: 40%;
+            height: 10vh;
+            text-align: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .social ul {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding: 10px 10px;
+        }
+
+        .social ul a {
+            color: white;
+        }
+
+        .social ul li {
+            position: relative;
+            display: block;
+            color: #fff;
+            font-size: 20px;
+            height: 60px;
+            width: 60px;
+            background: #000;
+            line-height: 60px;
+            border-radius: 50%;
+            margin: 0 15px;
+            cursor: pointer;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+        .social ul li::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            z-index: -1;
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+        }
+
+        .social ul li:hover::before {
+            -webkit-filter: blur(3px);
+            filter: blur(3px);
+            -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        .social ul li:nth-child(1):hover {
+            -webkit-box-shadow: 0 0 15px #4267b2;
+            box-shadow: 0 0 15px #4267b2;
+            text-shadow: 0 0 15px #4267b2;
+        }
+
+        .social ul li:nth-child(1):hover a {
+            color: #456cba;
+        }
+
+        .social ul li:nth-child(2):hover {
+            -webkit-box-shadow: 0 0 15px #f21d1da9;
+            box-shadow: 0 0 15px #f21d1da9;
+            text-shadow: 0 0 15px #f21d1da9;
+        }
+
+        .social ul li:nth-child(2):hover a {
+            color: red;
+        }
+
+        .social ul li:nth-child(3):hover {
+            -webkit-box-shadow: 0 0 15px #e1306c;
+            box-shadow: 0 0 15px #e1306c;
+            text-shadow: 0 0 15px #e1306c;
+        }
+
+        .social ul li:nth-child(3):hover a {
+            color: #e23670;
+        }
+
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background: black;
+            scroll-behavior: smooth;
+            overflow-y: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, transparent, #00bcd4);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            max-height: 10px;
+        }
+
+        .container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container h2 {
+            color: #fff;
+            text-align: center;
+            font-size: 11vw;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .container h2 span {
+            font-size: 0.3em;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .block {
+            position: absolute;
+            width: 50px;
+            height: 80px;
+            border: 0.01px solid #00bbd434;
+            background: black;
+            box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .about {
+            height: 80%;
+            width: 80%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .about h2 {
+            font-size: 2em;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .about p {
+            margin-top: 40px;
+            letter-spacing: 0.1em;
+            align-content: center;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .about a {
+            margin-top: 200px;
+            text-decoration: none;
+            display: flex;
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .about a h3 {
+            color: #00bcd4;
+            font-weight: 100;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 15px;
+        }
+
+        #rules {
+            background: rgba(13, 164, 175, 0.7);
+            height: 90vh;
+        }
+
+        .rules {
+            height: 90%;
+            width: 90%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rules h2 {
+            font-size: 2em;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .rules ol li {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            list-style: upper-roman;
+            letter-spacing: 0.2em;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .svg {
+            background: rgba(13, 164, 175, 0.7);
+        }
+
+        #timeline {
+            height: 90vh;
+        }
+
+        .timeline {
+            width: 90%;
+            height: 90%;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .timeline h2 {
+            font-size: 2em;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 50px;
+        }
+
+
+        .content {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        @media screen and (max-width: 767px) {
+            .content {
+                flex-direction: column;
             }
         }
+
+        .card {
+            width: 100%;
+            max-width: 300px;
+            min-width: 200px;
+            height: 250px;
+            background-color: black;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
+            border: 2px solid rgba(107, 107, 107, 0.384);
+            font-size: 16px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon {
+            margin: 0 auto;
+            width: 100%;
+            height: 80px;
+            max-width: 80px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: all 0.8s ease;
+            background: linear-gradient(
+                    90deg,
+                    #08ceffde 0%,
+                    #00eeff5d 40%,
+                    rgba(0, 0, 0, 0.28) 60%
+            ) 0px;
+            background-size: 200px;
+        }
+
+        .material-icons.md-18 {
+            font-size: 18px;
+        }
+
+        .material-icons.md-24 {
+            font-size: 24px;
+        }
+
+        .material-icons.md-36 {
+            font-size: 36px;
+        }
+
+        .material-icons.md-48 {
+            font-size: 48px;
+        }
+
+        .card .title {
+            width: 100%;
+            margin: 0;
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .card .text {
+            width: 80%;
+            margin: 0 auto;
+            font-size: 13px;
+            margin-top: 20px;
+            color: white;
+            font-weight: 200;
+            letter-spacing: 2px;
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.3s ease;
+            list-style: none;
+        }
+
+        .card:hover {
+            height: 270px;
+            background: #141313a9;
+        }
+
+        .card:hover .info {
+            height: 90%;
+        }
+
+        .card:hover .text {
+            transition: all 0.3s ease;
+            opacity: 1;
+            max-height: 40px;
+        }
+
+        .card:hover .icon {
+            background-position: -120px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .icon i {
+            background: linear-gradient(90deg, rgba(8, 206, 255, 0.87), #00eeff5d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+        .menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .menu span {
+            position: relative;
+            display: block;
+            width: 50%;
+            height: 2px;
+            background-color: black;
+            float: left;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            z-index: 200;
+        }
+
+        .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+        }
+
+        .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(5px);
+            transform: translateY(5px);
+        }
+
+        #menu {
+            display: none;
+        }
+
+        #menu:checked ~ .menu {
+            background-color: transparent;
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span {
+            background-color: white;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(1px) rotate(45deg);
+            transform: translateY(1px) rotate(45deg);
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(2) {
+            display: none;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(-1px) rotate(-45deg);
+            transform: translateY(-1px) rotate(-45deg);
+        }
+
+        #menu:checked ~ .nav {
+            left: 0px;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+        }
+
+        #menu:checked ~ main {
+            -webkit-transform: translateX(250px);
+            transform: translateX(250px);
+            -webkit-transition: -webkit-transform 500ms ease;
+            transition: -webkit-transform 500ms ease;
+            transition: transform 500ms ease;
+            transition: transform 500ms ease, -webkit-transform 500ms ease;
+        }
+
+        .nav {
+
+            position: fixed;
+            top: 0;
+            left: -310px;
+            width: 300px;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: grey;
+            font-size: 0.8em;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+            z-index: 2;
+        }
+
+        .nav ul {
+            position: relative;
+            list-style-type: none;
+            margin: 150px 0;
+            padding: 0;
+        }
+
+        .nav ul li {
+            position: relative;
+            display: block;
+            position: relative;
+            margin: 2em 0;
+        }
+
+        .nav ul li a {
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 15px 20px;
+            color: white;
+            line-height: 4em;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .nav ul li.active a {
+            color: white;
+        }
+
+        .nav ul li:not(.active)::after {
+            opacity: 0.2;
+        }
+
+        .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .nav ul li::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 0.2em;
+            background: black;
+            left: 0;
+            bottom: 0;
+            background-image: -webkit-gradient(
+                    linear,
+                    left top,
+                    right top,
+                    from(grey),
+                    to(black)
+            );
+            background-image: linear-gradient(to right, grey, black);
+        }
+
     </style>
 </head>
 <body>
-<div class="bar">
-    <h3>- <span>x</span></h3>
-</div>
+<input type="checkbox" id="menu"/>
+<label for="menu" class="menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</label>
+<nav class="nav">
+    <ul>
+        <li class="active"><a href="">Home</a></li>
+        {% if user.is_authenticated == False %}
+            <li class="#"><a href="accounts/login">Login</a></li>
+        {% endif %}
+        <li><a href="#">Market</a></li>
+        <li><a href="#">Trade portal</a></li>
+        <li><a href="#">Transactions</a></li>
+        {% if user.is_authenticated == True %}
+            <li class="#"><a href="accounts/logout">Logout</a></li>
+        {% endif %}
+    </ul>
+</nav>
 <div class="container">
-    <div class="loader">
-        <h2>Home Screen</h2>
+    <h2><span>Trade & Code</span><br/></h2>
+    <a href="#about"
+    >
+        <div class="arrow-container animated fadeInDown">
+            <div class="arrow-2">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="arrow-1 animated hinge infinite zoomIn"></div>
+        </div
+        >
+    </a>
+</div>
+<section id="about">
+    <div class="about">
+        <h2>abstract</h2>
+        <p>
+            This event brings an interesting and fun amalgamation of economics and
+            coding. It is an event based on real time trading and problem solving
+            while managing your balance. Each team will be provided with a certain
+            amount of virtual currency, and they will have to buy various
+            components and libraries required to write a code (eg: loops, if-else
+            statements, string library, classes etc.) The sale of components and
+            libraries will be followed by a few rounds of coding questions.Prices
+            of which will fluctuate according to demand and supply. Each team can
+            only use the components available in their respective inventories. If
+            the team does not have the required component, they can either trade
+            with the other teams by negotiating with them on a common platform, or
+            can buy from the trading portal. The team at the end with the maximum
+            currency will be declared as the winner.<br/><br/>
+        </p>
+        <a href="#rules"><h3>View Rules</h3></a>
+    </div>
+</section>
+<br>
+<div class="row">
+    <div>
+        <svg id="" preserveAspectRatio="xMidYMax meet" class="svg-separator sep12" viewBox="0 0 1600 200"
+             style="display: block;" data-height="200">
+            <polygon class="" style="fill: rgba(13, 164, 175, 0.7);"
+                     points="-4,24 800,198 1604,24 1604,204 -4,204 "></polygon>
+        </svg>
+        <section id="rules">
+            <div class="rules">
+                <h2>Rules</h2>
+
+                <ol>
+                    <li>Each team will be provided with a certain amount of virtual currency, and they will have to
+                        buy
+                        various components and libraries required to write a code (eg: loops, if-else statements,
+                        string
+                        library, classes etc.).
+                    </li>
+                    <li>The sale of components and libraries will be followed by a few rounds of coding questions.
+                    </li>
+                    <li>Prices of the components will fluctuate according to demand and supply.</li>
+                    <li>Each team can only use the components available in their respective inventories.</li>
+                    <li>If the team does not have the required component, they can either trade with other teams by
+                        negotiating with them on a common platform and trade through a trading portal or can buy
+                        from
+                        the market.
+                    </li>
+                </ol>
+
+            </div>
+        </section>
+        <div class="svg">
+            <svg
+                    id="svg"
+                    preserveAspectRatio="xMidYMax meet"
+                    class="svg-separator sep2"
+                    viewBox="0 0 1600 200"
+                    style="display: block"
+                    data-height="200"
+            >
+                <polygon
+                        class=""
+                        style="fill: black"
+                        points="-4,0 1604,198 1604,204 -4,204 	"
+                ></polygon>
+            </svg>
+        </div>
+        <section id="timeline">
+            <div class="timeline">
+                <h2>Contest TImeline</h2>
+                <div class="content">
+                    <div class="card">
+                        <div class="icon"><i class="material-icons md-36">face</i></div>
+                        <p class="title">Event Details</p>
+                        <p>
+                        <ul class="text">
+                            <li>Event Date: 10/04/2021</li>
+                            <li>Event Duration: 3-4 hours</li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">
+                            <i class="material-icons md-36">alternate_email</i>
+                        </div>
+                        <p class="title">Registrations</p>
+                        <p>
+                        <ul class="text">
+                            <li>Start Date: 3/04/2021</li>
+                            <li>End Date: 5/04/2021</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <div class="contacts">
+                <h3>Contact Details-</h3>
+
+                <ul>
+                    <li>Mrigank Anand - 8287118974</li>
+                    <li>Anant Verma - 7807622599</li>
+                </ul>
+            </div>
+            <div class="social">
+                <ul>
+                    <li>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
     </div>
 </div>
+<script src="anime.min.js">
+
+</script>
+<script>
+    /*
+ * anime.js v3.2.1
+ * (c) 2020 Julian Garnier
+ * Released under the MIT license
+ * animejs.com
+ */
+
+    !function (n, e) {
+        "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : n.anime = e()
+    }(this, function () {
+        "use strict";
+        var n = {
+                update: null,
+                begin: null,
+                loopBegin: null,
+                changeBegin: null,
+                change: null,
+                changeComplete: null,
+                loopComplete: null,
+                complete: null,
+                loop: 1,
+                direction: "normal",
+                autoplay: !0,
+                timelineOffset: 0
+            }, e = {duration: 1e3, delay: 0, endDelay: 0, easing: "easeOutElastic(1, .5)", round: 0},
+            t = ["translateX", "translateY", "translateZ", "rotate", "rotateX", "rotateY", "rotateZ", "scale", "scaleX", "scaleY", "scaleZ", "skew", "skewX", "skewY", "perspective", "matrix", "matrix3d"],
+            r = {CSS: {}, springs: {}};
+
+        function a(n, e, t) {
+            return Math.min(Math.max(n, e), t)
+        }
+
+        function o(n, e) {
+            return n.indexOf(e) > -1
+        }
+
+        function u(n, e) {
+            return n.apply(null, e)
+        }
+
+        var i = {
+            arr: function (n) {
+                return Array.isArray(n)
+            }, obj: function (n) {
+                return o(Object.prototype.toString.call(n), "Object")
+            }, pth: function (n) {
+                return i.obj(n) && n.hasOwnProperty("totalLength")
+            }, svg: function (n) {
+                return n instanceof SVGElement
+            }, inp: function (n) {
+                return n instanceof HTMLInputElement
+            }, dom: function (n) {
+                return n.nodeType || i.svg(n)
+            }, str: function (n) {
+                return "string" == typeof n
+            }, fnc: function (n) {
+                return "function" == typeof n
+            }, und: function (n) {
+                return void 0 === n
+            }, nil: function (n) {
+                return i.und(n) || null === n
+            }, hex: function (n) {
+                return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(n)
+            }, rgb: function (n) {
+                return /^rgb/.test(n)
+            }, hsl: function (n) {
+                return /^hsl/.test(n)
+            }, col: function (n) {
+                return i.hex(n) || i.rgb(n) || i.hsl(n)
+            }, key: function (t) {
+                return !n.hasOwnProperty(t) && !e.hasOwnProperty(t) && "targets" !== t && "keyframes" !== t
+            }
+        };
+
+        function c(n) {
+            var e = /\(([^)]+)\)/.exec(n);
+            return e ? e[1].split(",").map(function (n) {
+                return parseFloat(n)
+            }) : []
+        }
+
+        function s(n, e) {
+            var t = c(n), o = a(i.und(t[0]) ? 1 : t[0], .1, 100), u = a(i.und(t[1]) ? 100 : t[1], .1, 100),
+                s = a(i.und(t[2]) ? 10 : t[2], .1, 100), f = a(i.und(t[3]) ? 0 : t[3], .1, 100), l = Math.sqrt(u / o),
+                d = s / (2 * Math.sqrt(u * o)), p = d < 1 ? l * Math.sqrt(1 - d * d) : 0, v = 1,
+                h = d < 1 ? (d * l - f) / p : -f + l;
+
+            function g(n) {
+                var t = e ? e * n / 1e3 : n;
+                return t = d < 1 ? Math.exp(-t * d * l) * (v * Math.cos(p * t) + h * Math.sin(p * t)) : (v + h * t) * Math.exp(-t * l), 0 === n || 1 === n ? n : 1 - t
+            }
+
+            return e ? g : function () {
+                var e = r.springs[n];
+                if (e) return e;
+                for (var t = 0, a = 0; ;) if (1 === g(t += 1 / 6)) {
+                    if (++a >= 16) break
+                } else a = 0;
+                var o = t * (1 / 6) * 1e3;
+                return r.springs[n] = o, o
+            }
+        }
+
+        function f(n) {
+            return void 0 === n && (n = 10), function (e) {
+                return Math.ceil(a(e, 1e-6, 1) * n) * (1 / n)
+            }
+        }
+
+        var l, d, p = function () {
+            var n = 11, e = 1 / (n - 1);
+
+            function t(n, e) {
+                return 1 - 3 * e + 3 * n
+            }
+
+            function r(n, e) {
+                return 3 * e - 6 * n
+            }
+
+            function a(n) {
+                return 3 * n
+            }
+
+            function o(n, e, o) {
+                return ((t(e, o) * n + r(e, o)) * n + a(e)) * n
+            }
+
+            function u(n, e, o) {
+                return 3 * t(e, o) * n * n + 2 * r(e, o) * n + a(e)
+            }
+
+            return function (t, r, a, i) {
+                if (0 <= t && t <= 1 && 0 <= a && a <= 1) {
+                    var c = new Float32Array(n);
+                    if (t !== r || a !== i) for (var s = 0; s < n; ++s) c[s] = o(s * e, t, a);
+                    return function (n) {
+                        return t === r && a === i ? n : 0 === n || 1 === n ? n : o(f(n), r, i)
+                    }
+                }
+
+                function f(r) {
+                    for (var i = 0, s = 1, f = n - 1; s !== f && c[s] <= r; ++s) i += e;
+                    var l = i + (r - c[--s]) / (c[s + 1] - c[s]) * e, d = u(l, t, a);
+                    return d >= .001 ? function (n, e, t, r) {
+                        for (var a = 0; a < 4; ++a) {
+                            var i = u(e, t, r);
+                            if (0 === i) return e;
+                            e -= (o(e, t, r) - n) / i
+                        }
+                        return e
+                    }(r, l, t, a) : 0 === d ? l : function (n, e, t, r, a) {
+                        for (var u, i, c = 0; (u = o(i = e + (t - e) / 2, r, a) - n) > 0 ? t = i : e = i, Math.abs(u) > 1e-7 && ++c < 10;) ;
+                        return i
+                    }(r, i, i + e, t, a)
+                }
+            }
+        }(), v = (l = {
+            linear: function () {
+                return function (n) {
+                    return n
+                }
+            }
+        }, d = {
+            Sine: function () {
+                return function (n) {
+                    return 1 - Math.cos(n * Math.PI / 2)
+                }
+            }, Circ: function () {
+                return function (n) {
+                    return 1 - Math.sqrt(1 - n * n)
+                }
+            }, Back: function () {
+                return function (n) {
+                    return n * n * (3 * n - 2)
+                }
+            }, Bounce: function () {
+                return function (n) {
+                    for (var e, t = 4; n < ((e = Math.pow(2, --t)) - 1) / 11;) ;
+                    return 1 / Math.pow(4, 3 - t) - 7.5625 * Math.pow((3 * e - 2) / 22 - n, 2)
+                }
+            }, Elastic: function (n, e) {
+                void 0 === n && (n = 1), void 0 === e && (e = .5);
+                var t = a(n, 1, 10), r = a(e, .1, 2);
+                return function (n) {
+                    return 0 === n || 1 === n ? n : -t * Math.pow(2, 10 * (n - 1)) * Math.sin((n - 1 - r / (2 * Math.PI) * Math.asin(1 / t)) * (2 * Math.PI) / r)
+                }
+            }
+        }, ["Quad", "Cubic", "Quart", "Quint", "Expo"].forEach(function (n, e) {
+            d[n] = function () {
+                return function (n) {
+                    return Math.pow(n, e + 2)
+                }
+            }
+        }), Object.keys(d).forEach(function (n) {
+            var e = d[n];
+            l["easeIn" + n] = e, l["easeOut" + n] = function (n, t) {
+                return function (r) {
+                    return 1 - e(n, t)(1 - r)
+                }
+            }, l["easeInOut" + n] = function (n, t) {
+                return function (r) {
+                    return r < .5 ? e(n, t)(2 * r) / 2 : 1 - e(n, t)(-2 * r + 2) / 2
+                }
+            }, l["easeOutIn" + n] = function (n, t) {
+                return function (r) {
+                    return r < .5 ? (1 - e(n, t)(1 - 2 * r)) / 2 : (e(n, t)(2 * r - 1) + 1) / 2
+                }
+            }
+        }), l);
+
+        function h(n, e) {
+            if (i.fnc(n)) return n;
+            var t = n.split("(")[0], r = v[t], a = c(n);
+            switch (t) {
+                case"spring":
+                    return s(n, e);
+                case"cubicBezier":
+                    return u(p, a);
+                case"steps":
+                    return u(f, a);
+                default:
+                    return u(r, a)
+            }
+        }
+
+        function g(n) {
+            try {
+                return document.querySelectorAll(n)
+            } catch (n) {
+                return
+            }
+        }
+
+        function m(n, e) {
+            for (var t = n.length, r = arguments.length >= 2 ? arguments[1] : void 0, a = [], o = 0; o < t; o++) if (o in n) {
+                var u = n[o];
+                e.call(r, u, o, n) && a.push(u)
+            }
+            return a
+        }
+
+        function y(n) {
+            return n.reduce(function (n, e) {
+                return n.concat(i.arr(e) ? y(e) : e)
+            }, [])
+        }
+
+        function b(n) {
+            return i.arr(n) ? n : (i.str(n) && (n = g(n) || n), n instanceof NodeList || n instanceof HTMLCollection ? [].slice.call(n) : [n])
+        }
+
+        function M(n, e) {
+            return n.some(function (n) {
+                return n === e
+            })
+        }
+
+        function x(n) {
+            var e = {};
+            for (var t in n) e[t] = n[t];
+            return e
+        }
+
+        function w(n, e) {
+            var t = x(n);
+            for (var r in n) t[r] = e.hasOwnProperty(r) ? e[r] : n[r];
+            return t
+        }
+
+        function k(n, e) {
+            var t = x(n);
+            for (var r in e) t[r] = i.und(n[r]) ? e[r] : n[r];
+            return t
+        }
+
+        function O(n) {
+            return i.rgb(n) ? (t = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g.exec(e = n)) ? "rgba(" + t[1] + ",1)" : e : i.hex(n) ? (r = n.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function (n, e, t, r) {
+                return e + e + t + t + r + r
+            }), a = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(r), "rgba(" + parseInt(a[1], 16) + "," + parseInt(a[2], 16) + "," + parseInt(a[3], 16) + ",1)") : i.hsl(n) ? function (n) {
+                var e, t, r,
+                    a = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(n) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(n),
+                    o = parseInt(a[1], 10) / 360, u = parseInt(a[2], 10) / 100, i = parseInt(a[3], 10) / 100,
+                    c = a[4] || 1;
+
+                function s(n, e, t) {
+                    return t < 0 && (t += 1), t > 1 && (t -= 1), t < 1 / 6 ? n + 6 * (e - n) * t : t < .5 ? e : t < 2 / 3 ? n + (e - n) * (2 / 3 - t) * 6 : n
+                }
+
+                if (0 == u) e = t = r = i; else {
+                    var f = i < .5 ? i * (1 + u) : i + u - i * u, l = 2 * i - f;
+                    e = s(l, f, o + 1 / 3), t = s(l, f, o), r = s(l, f, o - 1 / 3)
+                }
+                return "rgba(" + 255 * e + "," + 255 * t + "," + 255 * r + "," + c + ")"
+            }(n) : void 0;
+            var e, t, r, a
+        }
+
+        function C(n) {
+            var e = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(n);
+            if (e) return e[1]
+        }
+
+        function P(n, e) {
+            return i.fnc(n) ? n(e.target, e.id, e.total) : n
+        }
+
+        function I(n, e) {
+            return n.getAttribute(e)
+        }
+
+        function D(n, e, t) {
+            if (M([t, "deg", "rad", "turn"], C(e))) return e;
+            var a = r.CSS[e + t];
+            if (!i.und(a)) return a;
+            var o = document.createElement(n.tagName),
+                u = n.parentNode && n.parentNode !== document ? n.parentNode : document.body;
+            u.appendChild(o), o.style.position = "absolute", o.style.width = 100 + t;
+            var c = 100 / o.offsetWidth;
+            u.removeChild(o);
+            var s = c * parseFloat(e);
+            return r.CSS[e + t] = s, s
+        }
+
+        function B(n, e, t) {
+            if (e in n.style) {
+                var r = e.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
+                    a = n.style[e] || getComputedStyle(n).getPropertyValue(r) || "0";
+                return t ? D(n, a, t) : a
+            }
+        }
+
+        function T(n, e) {
+            return i.dom(n) && !i.inp(n) && (!i.nil(I(n, e)) || i.svg(n) && n[e]) ? "attribute" : i.dom(n) && M(t, e) ? "transform" : i.dom(n) && "transform" !== e && B(n, e) ? "css" : null != n[e] ? "object" : void 0
+        }
+
+        function E(n) {
+            if (i.dom(n)) {
+                for (var e, t = n.style.transform || "", r = /(\w+)\(([^)]*)\)/g, a = new Map; e = r.exec(t);) a.set(e[1], e[2]);
+                return a
+            }
+        }
+
+        function F(n, e, t, r) {
+            var a,
+                u = o(e, "scale") ? 1 : 0 + (o(a = e, "translate") || "perspective" === a ? "px" : o(a, "rotate") || o(a, "skew") ? "deg" : void 0),
+                i = E(n).get(e) || u;
+            return t && (t.transforms.list.set(e, i), t.transforms.last = e), r ? D(n, i, r) : i
+        }
+
+        function A(n, e, t, r) {
+            switch (T(n, e)) {
+                case"transform":
+                    return F(n, e, r, t);
+                case"css":
+                    return B(n, e, t);
+                case"attribute":
+                    return I(n, e);
+                default:
+                    return n[e] || 0
+            }
+        }
+
+        function N(n, e) {
+            var t = /^(\*=|\+=|-=)/.exec(n);
+            if (!t) return n;
+            var r = C(n) || 0, a = parseFloat(e), o = parseFloat(n.replace(t[0], ""));
+            switch (t[0][0]) {
+                case"+":
+                    return a + o + r;
+                case"-":
+                    return a - o + r;
+                case"*":
+                    return a * o + r
+            }
+        }
+
+        function S(n, e) {
+            if (i.col(n)) return O(n);
+            if (/\s/g.test(n)) return n;
+            var t = C(n), r = t ? n.substr(0, n.length - t.length) : n;
+            return e ? r + e : r
+        }
+
+        function L(n, e) {
+            return Math.sqrt(Math.pow(e.x - n.x, 2) + Math.pow(e.y - n.y, 2))
+        }
+
+        function j(n) {
+            for (var e, t = n.points, r = 0, a = 0; a < t.numberOfItems; a++) {
+                var o = t.getItem(a);
+                a > 0 && (r += L(e, o)), e = o
+            }
+            return r
+        }
+
+        function q(n) {
+            if (n.getTotalLength) return n.getTotalLength();
+            switch (n.tagName.toLowerCase()) {
+                case"circle":
+                    return o = n, 2 * Math.PI * I(o, "r");
+                case"rect":
+                    return 2 * I(a = n, "width") + 2 * I(a, "height");
+                case"line":
+                    return L({x: I(r = n, "x1"), y: I(r, "y1")}, {x: I(r, "x2"), y: I(r, "y2")});
+                case"polyline":
+                    return j(n);
+                case"polygon":
+                    return t = (e = n).points, j(e) + L(t.getItem(t.numberOfItems - 1), t.getItem(0))
+            }
+            var e, t, r, a, o
+        }
+
+        function H(n, e) {
+            var t = e || {}, r = t.el || function (n) {
+                    for (var e = n.parentNode; i.svg(e) && i.svg(e.parentNode);) e = e.parentNode;
+                    return e
+                }(n), a = r.getBoundingClientRect(), o = I(r, "viewBox"), u = a.width, c = a.height,
+                s = t.viewBox || (o ? o.split(" ") : [0, 0, u, c]);
+            return {el: r, viewBox: s, x: s[0] / 1, y: s[1] / 1, w: u, h: c, vW: s[2], vH: s[3]}
+        }
+
+        function V(n, e, t) {
+            function r(t) {
+                void 0 === t && (t = 0);
+                var r = e + t >= 1 ? e + t : 0;
+                return n.el.getPointAtLength(r)
+            }
+
+            var a = H(n.el, n.svg), o = r(), u = r(-1), i = r(1), c = t ? 1 : a.w / a.vW, s = t ? 1 : a.h / a.vH;
+            switch (n.property) {
+                case"x":
+                    return (o.x - a.x) * c;
+                case"y":
+                    return (o.y - a.y) * s;
+                case"angle":
+                    return 180 * Math.atan2(i.y - u.y, i.x - u.x) / Math.PI
+            }
+        }
+
+        function $(n, e) {
+            var t = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g, r = S(i.pth(n) ? n.totalLength : n, e) + "";
+            return {
+                original: r,
+                numbers: r.match(t) ? r.match(t).map(Number) : [0],
+                strings: i.str(n) || e ? r.split(t) : []
+            }
+        }
+
+        function W(n) {
+            return m(n ? y(i.arr(n) ? n.map(b) : b(n)) : [], function (n, e, t) {
+                return t.indexOf(n) === e
+            })
+        }
+
+        function X(n) {
+            var e = W(n);
+            return e.map(function (n, t) {
+                return {target: n, id: t, total: e.length, transforms: {list: E(n)}}
+            })
+        }
+
+        function Y(n, e) {
+            var t = x(e);
+            if (/^spring/.test(t.easing) && (t.duration = s(t.easing)), i.arr(n)) {
+                var r = n.length;
+                2 === r && !i.obj(n[0]) ? n = {value: n} : i.fnc(e.duration) || (t.duration = e.duration / r)
+            }
+            var a = i.arr(n) ? n : [n];
+            return a.map(function (n, t) {
+                var r = i.obj(n) && !i.pth(n) ? n : {value: n};
+                return i.und(r.delay) && (r.delay = t ? 0 : e.delay), i.und(r.endDelay) && (r.endDelay = t === a.length - 1 ? e.endDelay : 0), r
+            }).map(function (n) {
+                return k(n, t)
+            })
+        }
+
+        function Z(n, e) {
+            var t = [], r = e.keyframes;
+            for (var a in r && (e = k(function (n) {
+                for (var e = m(y(n.map(function (n) {
+                    return Object.keys(n)
+                })), function (n) {
+                    return i.key(n)
+                }).reduce(function (n, e) {
+                    return n.indexOf(e) < 0 && n.push(e), n
+                }, []), t = {}, r = function (r) {
+                    var a = e[r];
+                    t[a] = n.map(function (n) {
+                        var e = {};
+                        for (var t in n) i.key(t) ? t == a && (e.value = n[t]) : e[t] = n[t];
+                        return e
+                    })
+                }, a = 0; a < e.length; a++) r(a);
+                return t
+            }(r), e)), e) i.key(a) && t.push({name: a, tweens: Y(e[a], n)});
+            return t
+        }
+
+        function G(n, e) {
+            var t;
+            return n.tweens.map(function (r) {
+                var a = function (n, e) {
+                        var t = {};
+                        for (var r in n) {
+                            var a = P(n[r], e);
+                            i.arr(a) && 1 === (a = a.map(function (n) {
+                                return P(n, e)
+                            })).length && (a = a[0]), t[r] = a
+                        }
+                        return t.duration = parseFloat(t.duration), t.delay = parseFloat(t.delay), t
+                    }(r, e), o = a.value, u = i.arr(o) ? o[1] : o, c = C(u), s = A(e.target, n.name, c, e),
+                    f = t ? t.to.original : s, l = i.arr(o) ? o[0] : f, d = C(l) || C(s), p = c || d;
+                return i.und(u) && (u = f), a.from = $(l, p), a.to = $(N(u, l), p), a.start = t ? t.end : 0, a.end = a.start + a.delay + a.duration + a.endDelay, a.easing = h(a.easing, a.duration), a.isPath = i.pth(o), a.isPathTargetInsideSVG = a.isPath && i.svg(e.target), a.isColor = i.col(a.from.original), a.isColor && (a.round = 1), t = a, a
+            })
+        }
+
+        var Q = {
+            css: function (n, e, t) {
+                return n.style[e] = t
+            }, attribute: function (n, e, t) {
+                return n.setAttribute(e, t)
+            }, object: function (n, e, t) {
+                return n[e] = t
+            }, transform: function (n, e, t, r, a) {
+                if (r.list.set(e, t), e === r.last || a) {
+                    var o = "";
+                    r.list.forEach(function (n, e) {
+                        o += e + "(" + n + ") "
+                    }), n.style.transform = o
+                }
+            }
+        };
+
+        function z(n, e) {
+            X(n).forEach(function (n) {
+                for (var t in e) {
+                    var r = P(e[t], n), a = n.target, o = C(r), u = A(a, t, o, n), i = N(S(r, o || C(u)), u),
+                        c = T(a, t);
+                    Q[c](a, t, i, n.transforms, !0)
+                }
+            })
+        }
+
+        function _(n, e) {
+            return m(y(n.map(function (n) {
+                return e.map(function (e) {
+                    return function (n, e) {
+                        var t = T(n.target, e.name);
+                        if (t) {
+                            var r = G(e, n), a = r[r.length - 1];
+                            return {
+                                type: t,
+                                property: e.name,
+                                animatable: n,
+                                tweens: r,
+                                duration: a.end,
+                                delay: r[0].delay,
+                                endDelay: a.endDelay
+                            }
+                        }
+                    }(n, e)
+                })
+            })), function (n) {
+                return !i.und(n)
+            })
+        }
+
+        function R(n, e) {
+            var t = n.length, r = function (n) {
+                return n.timelineOffset ? n.timelineOffset : 0
+            }, a = {};
+            return a.duration = t ? Math.max.apply(Math, n.map(function (n) {
+                return r(n) + n.duration
+            })) : e.duration, a.delay = t ? Math.min.apply(Math, n.map(function (n) {
+                return r(n) + n.delay
+            })) : e.delay, a.endDelay = t ? a.duration - Math.max.apply(Math, n.map(function (n) {
+                return r(n) + n.duration - n.endDelay
+            })) : e.endDelay, a
+        }
+
+        var J = 0;
+        var K = [], U = function () {
+            var n;
+
+            function e(t) {
+                for (var r = K.length, a = 0; a < r;) {
+                    var o = K[a];
+                    o.paused ? (K.splice(a, 1), r--) : (o.tick(t), a++)
+                }
+                n = a > 0 ? requestAnimationFrame(e) : void 0
+            }
+
+            return "undefined" != typeof document && document.addEventListener("visibilitychange", function () {
+                en.suspendWhenDocumentHidden && (nn() ? n = cancelAnimationFrame(n) : (K.forEach(function (n) {
+                    return n._onDocumentVisibility()
+                }), U()))
+            }), function () {
+                n || nn() && en.suspendWhenDocumentHidden || !(K.length > 0) || (n = requestAnimationFrame(e))
+            }
+        }();
+
+        function nn() {
+            return !!document && document.hidden
+        }
+
+        function en(t) {
+            void 0 === t && (t = {});
+            var r, o = 0, u = 0, i = 0, c = 0, s = null;
+
+            function f(n) {
+                var e = window.Promise && new Promise(function (n) {
+                    return s = n
+                });
+                return n.finished = e, e
+            }
+
+            var l, d, p, v, h, g, y, b,
+                M = (d = w(n, l = t), p = w(e, l), v = Z(p, l), h = X(l.targets), g = _(h, v), y = R(g, p), b = J, J++, k(d, {
+                    id: b,
+                    children: [],
+                    animatables: h,
+                    animations: g,
+                    duration: y.duration,
+                    delay: y.delay,
+                    endDelay: y.endDelay
+                }));
+            f(M);
+
+            function x() {
+                var n = M.direction;
+                "alternate" !== n && (M.direction = "normal" !== n ? "normal" : "reverse"), M.reversed = !M.reversed, r.forEach(function (n) {
+                    return n.reversed = M.reversed
+                })
+            }
+
+            function O(n) {
+                return M.reversed ? M.duration - n : n
+            }
+
+            function C() {
+                o = 0, u = O(M.currentTime) * (1 / en.speed)
+            }
+
+            function P(n, e) {
+                e && e.seek(n - e.timelineOffset)
+            }
+
+            function I(n) {
+                for (var e = 0, t = M.animations, r = t.length; e < r;) {
+                    var o = t[e], u = o.animatable, i = o.tweens, c = i.length - 1, s = i[c];
+                    c && (s = m(i, function (e) {
+                        return n < e.end
+                    })[0] || s);
+                    for (var f = a(n - s.start - s.delay, 0, s.duration) / s.duration, l = isNaN(f) ? 1 : s.easing(f), d = s.to.strings, p = s.round, v = [], h = s.to.numbers.length, g = void 0, y = 0; y < h; y++) {
+                        var b = void 0, x = s.to.numbers[y], w = s.from.numbers[y] || 0;
+                        b = s.isPath ? V(s.value, l * x, s.isPathTargetInsideSVG) : w + l * (x - w), p && (s.isColor && y > 2 || (b = Math.round(b * p) / p)), v.push(b)
+                    }
+                    var k = d.length;
+                    if (k) {
+                        g = d[0];
+                        for (var O = 0; O < k; O++) {
+                            d[O];
+                            var C = d[O + 1], P = v[O];
+                            isNaN(P) || (g += C ? P + C : P + " ")
+                        }
+                    } else g = v[0];
+                    Q[o.type](u.target, o.property, g, u.transforms), o.currentValue = g, e++
+                }
+            }
+
+            function D(n) {
+                M[n] && !M.passThrough && M[n](M)
+            }
+
+            function B(n) {
+                var e = M.duration, t = M.delay, l = e - M.endDelay, d = O(n);
+                M.progress = a(d / e * 100, 0, 100), M.reversePlayback = d < M.currentTime, r && function (n) {
+                    if (M.reversePlayback) for (var e = c; e--;) P(n, r[e]); else for (var t = 0; t < c; t++) P(n, r[t])
+                }(d), !M.began && M.currentTime > 0 && (M.began = !0, D("begin")), !M.loopBegan && M.currentTime > 0 && (M.loopBegan = !0, D("loopBegin")), d <= t && 0 !== M.currentTime && I(0), (d >= l && M.currentTime !== e || !e) && I(e), d > t && d < l ? (M.changeBegan || (M.changeBegan = !0, M.changeCompleted = !1, D("changeBegin")), D("change"), I(d)) : M.changeBegan && (M.changeCompleted = !0, M.changeBegan = !1, D("changeComplete")), M.currentTime = a(d, 0, e), M.began && D("update"), n >= e && (u = 0, M.remaining && !0 !== M.remaining && M.remaining--, M.remaining ? (o = i, D("loopComplete"), M.loopBegan = !1, "alternate" === M.direction && x()) : (M.paused = !0, M.completed || (M.completed = !0, D("loopComplete"), D("complete"), !M.passThrough && "Promise" in window && (s(), f(M)))))
+            }
+
+            return M.reset = function () {
+                var n = M.direction;
+                M.passThrough = !1, M.currentTime = 0, M.progress = 0, M.paused = !0, M.began = !1, M.loopBegan = !1, M.changeBegan = !1, M.completed = !1, M.changeCompleted = !1, M.reversePlayback = !1, M.reversed = "reverse" === n, M.remaining = M.loop, r = M.children;
+                for (var e = c = r.length; e--;) M.children[e].reset();
+                (M.reversed && !0 !== M.loop || "alternate" === n && 1 === M.loop) && M.remaining++, I(M.reversed ? M.duration : 0)
+            }, M._onDocumentVisibility = C, M.set = function (n, e) {
+                return z(n, e), M
+            }, M.tick = function (n) {
+                i = n, o || (o = i), B((i + (u - o)) * en.speed)
+            }, M.seek = function (n) {
+                B(O(n))
+            }, M.pause = function () {
+                M.paused = !0, C()
+            }, M.play = function () {
+                M.paused && (M.completed && M.reset(), M.paused = !1, K.push(M), C(), U())
+            }, M.reverse = function () {
+                x(), M.completed = !M.reversed, C()
+            }, M.restart = function () {
+                M.reset(), M.play()
+            }, M.remove = function (n) {
+                rn(W(n), M)
+            }, M.reset(), M.autoplay && M.play(), M
+        }
+
+        function tn(n, e) {
+            for (var t = e.length; t--;) M(n, e[t].animatable.target) && e.splice(t, 1)
+        }
+
+        function rn(n, e) {
+            var t = e.animations, r = e.children;
+            tn(n, t);
+            for (var a = r.length; a--;) {
+                var o = r[a], u = o.animations;
+                tn(n, u), u.length || o.children.length || r.splice(a, 1)
+            }
+            t.length || r.length || e.pause()
+        }
+
+        return en.version = "3.2.1", en.speed = 1, en.suspendWhenDocumentHidden = !0, en.running = K, en.remove = function (n) {
+            for (var e = W(n), t = K.length; t--;) rn(e, K[t])
+        }, en.get = A, en.set = z, en.convertPx = D, en.path = function (n, e) {
+            var t = i.str(n) ? g(n)[0] : n, r = e || 100;
+            return function (n) {
+                return {property: n, el: t, svg: H(t), totalLength: q(t) * (r / 100)}
+            }
+        }, en.setDashoffset = function (n) {
+            var e = q(n);
+            return n.setAttribute("stroke-dasharray", e), e
+        }, en.stagger = function (n, e) {
+            void 0 === e && (e = {});
+            var t = e.direction || "normal", r = e.easing ? h(e.easing) : null, a = e.grid, o = e.axis, u = e.from || 0,
+                c = "first" === u, s = "center" === u, f = "last" === u, l = i.arr(n),
+                d = l ? parseFloat(n[0]) : parseFloat(n), p = l ? parseFloat(n[1]) : 0, v = C(l ? n[1] : n) || 0,
+                g = e.start || 0 + (l ? d : 0), m = [], y = 0;
+            return function (n, e, i) {
+                if (c && (u = 0), s && (u = (i - 1) / 2), f && (u = i - 1), !m.length) {
+                    for (var h = 0; h < i; h++) {
+                        if (a) {
+                            var b = s ? (a[0] - 1) / 2 : u % a[0], M = s ? (a[1] - 1) / 2 : Math.floor(u / a[0]),
+                                x = b - h % a[0], w = M - Math.floor(h / a[0]), k = Math.sqrt(x * x + w * w);
+                            "x" === o && (k = -x), "y" === o && (k = -w), m.push(k)
+                        } else m.push(Math.abs(u - h));
+                        y = Math.max.apply(Math, m)
+                    }
+                    r && (m = m.map(function (n) {
+                        return r(n / y) * y
+                    })), "reverse" === t && (m = m.map(function (n) {
+                        return o ? n < 0 ? -1 * n : -n : Math.abs(y - n)
+                    }))
+                }
+                return g + (l ? (p - d) / y : d) * (Math.round(100 * m[e]) / 100) + v
+            }
+        }, en.timeline = function (n) {
+            void 0 === n && (n = {});
+            var t = en(n);
+            return t.duration = 0, t.add = function (r, a) {
+                var o = K.indexOf(t), u = t.children;
+
+                function c(n) {
+                    n.passThrough = !0
+                }
+
+                o > -1 && K.splice(o, 1);
+                for (var s = 0; s < u.length; s++) c(u[s]);
+                var f = k(r, w(e, n));
+                f.targets = f.targets || n.targets;
+                var l = t.duration;
+                f.autoplay = !1, f.direction = t.direction, f.timelineOffset = i.und(a) ? l : N(a, l), c(t), t.seek(f.timelineOffset);
+                var d = en(f);
+                c(d), u.push(d);
+                var p = R(u, n);
+                return t.delay = p.delay, t.endDelay = p.endDelay, t.duration = p.duration, t.seek(0), t.reset(), t.autoplay && t.play(), t
+            }, t
+        }, en.easing = h, en.penner = v, en.random = function (n, e) {
+            return Math.floor(Math.random() * (e - n + 1)) + n
+        }, en
+    });
+    const container = document.querySelector(".container");
+    for (var i = 0; i <= 100; i++) {
+        const blocks = document.createElement("div");
+        blocks.classList.add("block");
+        container.appendChild(blocks);
+    }
+
+    function animateBlocks() {
+        anime({
+            targets: ".block",
+            translateX: function () {
+                return anime.random(-900, 900);
+            },
+            translateY: function () {
+                return anime.random(-500, 500);
+            },
+            scale: function () {
+                return anime.random(1, 5);
+            },
+
+            easing: "linear",
+            duration: 3000,
+            delay: anime.stagger(10),
+            complete: animateBlocks,
+        });
+    }
+
+    animateBlocks();
+
+    animateBlocks();
+</script>
+
+<script></script>
 </body>
 </html>
