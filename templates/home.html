@@ -276,8 +276,8 @@
             color: #fff;
             text-align: center;
             font-size: 11vw;
-            font-weight: 600;
             z-index: 1;
+            font-weight: 600;
         }
 
         .container h2 span {
@@ -285,6 +285,7 @@
             letter-spacing: 0.4em;
             text-transform: uppercase;
             font-weight: 400;
+
         }
 
         .block {
@@ -312,6 +313,13 @@
             justify-content: center;
             display: flex;
             flex-direction: column;
+        }
+
+        @media screen and(max-width: 768px) {
+            .about {
+                margin-top: -25vh;
+                height: 100%
+            }
         }
 
         .about h2 {
@@ -399,6 +407,36 @@
             margin-bottom: 50px;
         }
 
+        @media screen and (max-width: 1024px) {
+            ::-webkit-scrollbar {
+                width: 0;
+            }
+
+            .container {
+                height: 100vh;
+            }
+
+            section {
+                padding-top: 60px;
+                width: 100%;
+                height: 90vh;
+                font-size: 14px;
+            }
+
+            #about a {
+                display: none;
+            }
+
+            #rules {
+                padding: 0 20px;
+            }
+
+            #timeline .content {
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
 
         .content {
             width: 100%;
@@ -469,10 +507,10 @@
         }
 
         .card .title {
+            font-size: 20px;
             width: 100%;
-            margin: 0;
             text-align: center;
-            margin-top: 30px;
+            margin: 30px 0 0;
             color: white;
             font-weight: 600;
             text-transform: uppercase;
@@ -481,9 +519,8 @@
 
         .card .text {
             width: 80%;
-            margin: 0 auto;
-            font-size: 13px;
-            margin-top: 20px;
+            font-size: 18px;
+            margin: 20px auto 0;
             color: white;
             font-weight: 200;
             letter-spacing: 2px;
@@ -638,7 +675,7 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: grey;
+            background-color: rgba(13, 164, 175);
             font-size: 0.8em;
             -webkit-transition: left 500ms ease;
             transition: left 500ms ease;
@@ -672,6 +709,150 @@
             color: rgba(255, 255, 255, 0.35);
         }
 
+        footer {
+            height: 10vh;
+            background-color: rgba(13, 164, 175, 0.7);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .contacts {
+            width: 50%;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .contacts h3 {
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .contacts ul {
+            list-style: none;
+            margin-top: 10px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .social {
+            margin: 0;
+            padding: 0;
+            width: 40%;
+            height: 10vh;
+            text-align: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .social ul {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding: 10px 10px;
+        }
+
+        .social ul a {
+            color: white;
+        }
+
+        .social ul li {
+            position: relative;
+            display: block;
+            color: #fff;
+            font-size: 20px;
+            height: 60px;
+            width: 60px;
+            background: #000;
+            line-height: 60px;
+            border-radius: 50%;
+            margin: 0 15px;
+            cursor: pointer;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+        .social ul li::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            z-index: -1;
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+        }
+
+        .social ul li:hover::before {
+            -webkit-filter: blur(3px);
+            filter: blur(3px);
+            -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        .social ul li:nth-child(1):hover {
+            -webkit-box-shadow: 0 0 15px #4267b2;
+            box-shadow: 0 0 15px #4267b2;
+            text-shadow: 0 0 15px #4267b2;
+        }
+
+        .social ul li:nth-child(1):hover a {
+            color: #456cba;
+        }
+
+        .social ul li:nth-child(2):hover {
+            -webkit-box-shadow: 0 0 15px #f21d1da9;
+            box-shadow: 0 0 15px #f21d1da9;
+            text-shadow: 0 0 15px #f21d1da9;
+        }
+
+        .social ul li:nth-child(2):hover a {
+            color: red;
+        }
+
+        .social ul li:nth-child(3):hover {
+            -webkit-box-shadow: 0 0 15px #e1306c;
+            box-shadow: 0 0 15px #e1306c;
+            text-shadow: 0 0 15px #e1306c;
+        }
+
+        .social ul li:nth-child(3):hover a {
+            color: #e23670;
+        }
+
+        @media screen and (max-width: 1024px) {
+            footer {
+                font-size: 14px;
+            }
+
+            .social {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .social ul li {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                width: 40px;
+            }
+        }
+
         .nav ul li.active a {
             color: white;
         }
@@ -702,6 +883,62 @@
             background-image: linear-gradient(to right, grey, black);
         }
 
+        @media screen and (max-width: 768px) {
+            .container {
+                height: 100vh;
+                margin-bottom: 50px;
+            }
+
+            section {
+                width: 100%;
+                min-height: 100vh;
+                font-size: 12px;
+                overflow-y: visible;
+                height: fit-content;
+            }
+
+            .svg2 {
+                display: none;
+            }
+
+            .svg {
+                display: none;
+            }
+
+            #rules {
+                height: fit-content;
+                padding: 20px 20px;
+            }
+
+            #timeline {
+                align-items: center;
+                justify-content: center;
+                height: fit-content;
+            }
+
+            #timeline .card {
+                max-width: 300px;
+                min-height: 100px;
+                font-size: 12px;
+            }
+
+            footer {
+                margin-top: 50px;
+                font-size: 14px;
+                height: 90px;
+            }
+
+            .contacts {
+                width: 100%;
+                text-align: center;
+            }
+
+            .social {
+                display: none;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -718,6 +955,7 @@
             <li class="#"><a href="accounts/login">Login</a></li>
         {% endif %}
         <li><a href="#">Market</a></li>
+        <li><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
         <li><a href="#">Trade portal</a></li>
         <li><a href="#">Transactions</a></li>
         {% if user.is_authenticated == True %}
@@ -740,7 +978,7 @@
 </div>
 <section id="about">
     <div class="about">
-        <h2>abstract</h2>
+        <h2>About</h2>
         <p>
             This event brings an interesting and fun amalgamation of economics and
             coding. It is an event based on real time trading and problem solving
@@ -769,8 +1007,9 @@
         </svg>
         <section id="rules">
             <div class="rules">
-                <h2>Rules</h2>
-
+                <div>
+                    <h2>Rules</h2>
+                </div>
                 <ol>
                     <li>Each team will be provided with a certain amount of virtual currency, and they will have to
                         buy
@@ -787,8 +1026,8 @@
                         from
                         the market.
                     </li>
+                    <li>Teams can trade there components while the competition is going on.</li>
                 </ol>
-
             </div>
         </section>
         <div class="svg">
@@ -809,30 +1048,46 @@
         </div>
         <section id="timeline">
             <div class="timeline">
-                <h2>Contest TImeline</h2>
+                <h2>Contest Details</h2>
                 <div class="content">
                     <div class="card">
-                        <div class="icon"><i class="material-icons md-36">face</i></div>
-                        <p class="title">Event Details</p>
+                        <div class="icon"><i class="material-icons md-36">date_range</i></div>
+                        <p class="title">Date</p>
                         <p>
-                        <ul class="text">
-                            <li>Event Date: 10/04/2021</li>
-                            <li>Event Duration: 3-4 hours</li>
+                        <ul class="text" style="opacity: 1 !important;">
+                            <li>{{ contest.date }}</li>
                         </ul>
                         </p>
                     </div>
                     <div class="card">
-                        <div class="icon">
-                            <i class="material-icons md-36">alternate_email</i>
-                        </div>
-                        <p class="title">Registrations</p>
+                        <div class="icon"><i class="material-icons md-36">query_builder</i></div>
+                        <p class="title">Start time</p>
                         <p>
-                        <ul class="text">
-                            <li>Start Date: 3/04/2021</li>
-                            <li>End Date: 5/04/2021</li>
+                        <ul class="text" style="opacity: 1 !important;">
+                            <li>{{ contest.start_time }}</li>
                         </ul>
                         </p>
                     </div>
+                    <div class="card">
+                        <div class="icon"><i class="material-icons md-36">insert_chart</i></div>
+                        <p class="title">Rounds</p>
+                        <p>
+                        <ul class="text" style="opacity: 1 !important;">
+                            <li>{{ contest.rounds }}</li>
+                        </ul>
+                        </p>
+                    </div>
+                    {#                    <div class="card">#}
+                    {#                        <div class="icon">#}
+                    {#                            <i class="material-icons md-36">alternate_email</i>#}
+                    {#                        </div>#}
+                    {#                        <p class="title">Registrations</p>#}
+                    {#                        <p>#}
+                    {#                        <ul class="text">#}
+                    {#                            <li>Date: {{ contest.date }}</li>#}
+                    {#                        </ul>#}
+                    {#                        </p>#}
+                    {#                    </div>#}
                 </div>
             </div>
         </section>

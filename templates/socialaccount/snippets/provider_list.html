@@ -17,8 +17,8 @@
     <a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }} btn"
        href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
         <div class="btn">
-            <img src="https://img.icons8.com/color/126/000000/google-logo.png"/><span style="margin-left: 20px">Google-SignIn</span>
+            <img src="https://img.icons8.com/color/126/000000/google-logo.png"/><span
+                style="margin-left: 20px; text-decoration: none !important;">Google-SignIn</span>
         </div>
     </a>
-
 {% endfor %}
