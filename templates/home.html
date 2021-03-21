@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
+    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Home</title>
@@ -948,8 +949,10 @@
     <span></span>
     <span></span>
 </label>
-<nav class="nav">
+<nav class="nav" style="overflow-y: scroll">
     <ul>
+        <img style="margin-left: 10%" width="80%" src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.webp"/>
+
         <li class="active"><a href="">Home</a></li>
         {% if user.is_authenticated == False %}
             <li class="#"><a href="accounts/login">Login</a></li>
@@ -961,6 +964,8 @@
         {% if user.is_authenticated == True %}
             <li class="#"><a href="accounts/logout">Logout</a></li>
         {% endif %}
+        <li><a href="{% url 'developers' %}">Developers</a></li>
+
     </ul>
 </nav>
 <div class="container">
