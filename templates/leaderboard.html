@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <link type="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
+    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Leader Board</title>
@@ -19,7 +19,7 @@
         }
 
         body {
-            background: #fcdc00;
+            background: rgb(13, 164, 175);
             color: white;
             overflow-x: hidden;
         }
@@ -162,10 +162,213 @@
             border-radius: 6px;
             max-height: 10px;
         }
+
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+        .menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .menu span {
+            position: relative;
+            display: block;
+            width: 50%;
+            height: 2px;
+            background-color: black;
+            float: left;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            z-index: 200;
+        }
+
+        .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+        }
+
+        .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(5px);
+            transform: translateY(5px);
+        }
+
+        #menu {
+            display: none;
+        }
+
+        #menu:checked ~ .menu {
+            background-color: transparent;
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span {
+            background-color: white;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(1px) rotate(45deg);
+            transform: translateY(1px) rotate(45deg);
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(2) {
+            display: none;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(-1px) rotate(-45deg);
+            transform: translateY(-1px) rotate(-45deg);
+        }
+
+        #menu:checked ~ .nav {
+            left: 0px;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+        }
+
+        #menu:checked ~ main {
+            -webkit-transform: translateX(250px);
+            transform: translateX(250px);
+            -webkit-transition: -webkit-transform 500ms ease;
+            transition: -webkit-transform 500ms ease;
+            transition: transform 500ms ease;
+            transition: transform 500ms ease, -webkit-transform 500ms ease;
+        }
+
+        .nav {
+
+            position: fixed;
+            top: 0;
+            left: -310px;
+            width: 300px;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(13, 164, 175);
+            font-size: 0.8em;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+            z-index: 2;
+        }
+
+        .nav ul {
+            position: relative;
+            list-style-type: none;
+            margin: 150px 0;
+            padding: 0;
+        }
+
+        .nav ul li {
+            position: relative;
+            display: block;
+            position: relative;
+            margin: 2em 0;
+        }
+
+        .nav ul li a {
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 15px 20px;
+            color: white;
+            line-height: 4em;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .nav ul li.active a {
+            color: white;
+        }
+
+        .nav ul li:not(.active)::after {
+            opacity: 0.2;
+        }
+
+        .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .nav ul li::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 0.2em;
+            background: black;
+            left: 0;
+            bottom: 0;
+            background-image: -webkit-gradient(
+                    linear,
+                    left top,
+                    right top,
+                    from(grey),
+                    to(black)
+            );
+            background-image: linear-gradient(to right, grey, black);
+        }
     </style>
 </head>
 
 <body>
+
+<input type="checkbox" id="menu"/>
+<label for="menu" class="menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</label>
+<nav class="nav" style="overflow-y: scroll">
+    <ul>
+        <img style="margin-left: 10%; margin-top: -35%; margin-bottom: -10%" width="80%"
+             src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"/>
+        <li class="active"><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        {% if user.is_authenticated == False %}
+            <li class="#"><a href="accounts/login">Login</a></li>
+        {% endif %}
+        <li><a href="#">Market</a></li>
+        <li><a href="#">Trade portal</a></li>
+        <li><a href="#">Transactions</a></li>
+        <li><a href="{% url 'developers' %}">Developers</a></li>
+    </ul>
+</nav>
 <div class="wrapper">
     <h1>Leader Board</h1>
     <hr/>
@@ -184,17 +387,17 @@
         <div class="lboard_item">
             <div class="lboard_member">
                 <div class="image">
-                    <img src="https://i.ibb.co/b13pRCt/clipart1941988.png" "
-                    alt=" ##" />
+                    <img src="https://i.ibb.co/b13pRCt/clipart1941988.png"
+                         alt=" ##"/>
                 </div>
                 <div class="name_bar">
-                    <p><span>1. </span>Anonymous Team</p>
+                    <p><span>1. </span>kgb</p>
                     <div class="bar_wrap">
                         <div class="inner_bar" style="width: 10%">
                         </div>
                     </div>
                 </div>
-                <div class="points">100 pts</div>
+                <div class="points">100000 pts</div>
             </div>
             <div class="lboard_member">
                 <div class="image">
@@ -212,7 +415,6 @@
             </div>
         </div>
     </div>
-
 </div>
 </body>
 

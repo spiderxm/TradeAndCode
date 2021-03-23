@@ -235,7 +235,6 @@
 
         .question {
             width: 80%;
-            margin-top: 40px;
             margin: 0 auto;
             padding: 30px;
             font-size: 1.5em;
@@ -316,6 +315,7 @@
         }
 
         .bar .btn {
+
             display: flex;
             padding: 10px 60px;
             width: 100px;
@@ -331,11 +331,23 @@
             cursor: pointer;
             transition: outline-offset 0.1s;
             transition: letter-spacing 0.2s;
+            border-radius: 10px;
         }
 
         .btn:hover {
             outline-offset: 4px;
             letter-spacing: 1px;
+            border-radius: 10px;
+        }
+
+        .form {
+            width: 500px;
+        }
+
+        @media (max-width: 600px) {
+            .form {
+                width: 80%;
+            }
         }
 
         @media screen and (max-width: 1024px) {
@@ -372,9 +384,164 @@
                 margin-bottom: 30px;
             }
         }
+
+        .input-file-container {
+            position: relative;
+            width: 225px;
+        }
+
+        .js .input-file-trigger {
+            display: block;
+            padding: 14px 45px;
+            background: #39D2B4;
+            color: #fff;
+            font-size: 1em;
+            transition: all .4s;
+            cursor: pointer;
+        }
+
+        .js .input-file {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 225px;
+            opacity: 0;
+            padding: 14px 0;
+            cursor: pointer;
+        }
+
+        .js .input-file:hover + .input-file-trigger,
+        .js .input-file:focus + .input-file-trigger,
+        .js .input-file-trigger:hover,
+        .js .input-file-trigger:focus {
+            background: #34495E;
+            color: #39D2B4;
+        }
+
+        .file-return {
+            margin: 0;
+        }
+
+        .file-return:not(:empty) {
+            margin: 1em 0;
+        }
+
+        .js .file-return {
+            font-style: italic;
+            font-size: .9em;
+            font-weight: bold;
+        }
+
+        .js .file-return:not(:empty):before {
+            content: "Selected file: ";
+            font-style: normal;
+            font-weight: normal;
+        }
+
+
+        h1, h2 {
+            margin-bottom: 5px;
+            font-weight: normal;
+            text-align: center;
+            color: #aaa;
+        }
+
+        h2 {
+            margin: 5px 0 2em;
+            color: #1ABC9C;
+        }
+
+        form {
+            width: 225px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2 + P {
+            text-align: center;
+        }
+
+        .txtcenter {
+            margin-top: 4em;
+            font-size: .9em;
+            text-align: center;
+            color: #aaa;
+        }
+
+        .copy {
+            margin-top: 2em;
+        }
+
+        .copy a {
+            text-decoration: none;
+            color: #1ABC9C;
+        }
+
+
+        .button1 {
+            border-radius: 10px;
+            border: 0;
+            position: relative;
+            width: 200px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            overflow: hidden;
+            margin: 0 0.8rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0, 0.22, 0.3, 1);
+        }
+
+        .button1::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .button1 span {
+            color: #fff;
+            font-size: 1rem;
+            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        ._1 {
+            background: grey;
+        }
+
+        .button1 .back {
+            position: absolute;
+            width: 0;
+            height: 0;
+            filter: url(#filter);
+            border-radius: 50%;
+            z-index: 5;
+            transition: all 2.5s cubic-bezier(0.1, 0.22, 0.3, 1);
+        }
+
+        ._1 .back {
+            left: -50%;
+            top: -50%;
+            background: #07c6e7;
+        }
+
+        .button1:hover .back {
+            width: 400px;
+            height: 100px;
+        }
+
+
     </style>
+
 </head>
-<body>
+<body style="overflow-y: scroll">
 <input type="checkbox" id="menu"/>
 <label for="menu" class="menu">
     <span></span>
@@ -390,12 +557,11 @@
     </ul>
 </nav>
 <section>
-    <div class="color"></div>
-    <div class="color"></div>
-    <div class="color"></div>
+
     <main>
         <div class="question">
-            <h3>Question 1.</h3>
+            <h3>Round {{ round.number }}</h3>
+            <h6 style="text-align: center">Problem Statement</h6>
             <p>
                 Lorem ipsum elit. Alias doloribus accusamus vero quas nulla
                 veritatis blanditiis inventore debitis. Veniam suscipit magni rerum
@@ -404,85 +570,70 @@
                 saepe molestiae magnam deleniti repellendus placeat vero. Vel quis
                 omnis nobis.
             </p>
+            <h6>Test - Input</h6>
+            <p>
+                10 20 30 40 50 60
+            </p>
+            <h6>Sample - Output</h6>
+            <p>
+                10 20 30 40 50 60
+            </p>
         </div>
         <div class="bar">
-            <input type="file">
-            <div class="upload">
-                Upload your answer here
-                <div class="svg">
-                    <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            x="0px"
-                            y="0px"
-                            width="30"
-                            height="30"
-                            viewBox="0 0 172 172"
-                            style="fill: #000000"
-                    >
-                        <g
-                                fill="none"
-                                fill-rule="nonzero"
-                                stroke="none"
-                                stroke-width="1"
-                                stroke-linecap="butt"
-                                stroke-linejoin="miter"
-                                stroke-miterlimit="10"
-                                stroke-dasharray=""
-                                stroke-dashoffset="0"
-                                font-family="none"
-                                font-weight="none"
-                                font-size="none"
-                                text-anchor="none"
-                                style="mix-blend-mode: normal"
-                        >
-                            <path d="M0,172v-172h172v172z" fill="none"></path>
-                            <g fill="#ffffff">
-                                <path
-                                        d="M83.17812,28.08438l-26.875,26.875c-1.6125,1.6125 -1.6125,4.16562 0,5.64375c1.6125,1.6125 4.16562,1.6125 5.64375,0l20.02188,-20.02188v79.0125c0,2.28437 1.74688,4.03125 4.03125,4.03125c2.28437,0 4.03125,-1.74688 4.03125,-4.03125v-79.0125l20.02188,20.02188c0.80625,0.80625 1.88125,1.20938 2.82187,1.20938c0.94062,0 2.01563,-0.40312 2.82187,-1.20938c1.6125,-1.6125 1.6125,-4.16562 0,-5.64375l-26.875,-26.875c-1.6125,-1.6125 -4.03125,-1.6125 -5.64375,0zM131.95625,152.91875c0,-2.28437 -1.74688,-4.03125 -4.03125,-4.03125h-83.85c-2.28437,0 -4.03125,1.74688 -4.03125,4.03125c0,2.28438 1.74688,4.03125 4.03125,4.03125h83.85c2.28438,0 4.03125,-1.88125 4.03125,-4.03125z"
-                                ></path>
-                            </g>
-                        </g>
+            <form method="post">
+                {% csrf_token %}
+                <p class="file-return"></p>
+                <div class="input-file-container">
+                    <input class="input-file" id="my-file" type="file" accept=".cpp,.c">
+                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+
+                    <svg width="0" height="0">
+                        <filter id="filter">
+                            <feTurbulence
+                                    type="fractalNoise"
+                                    baseFrequency=".01"
+                                    numOctaves="6"></feTurbulence>
+                            <feDisplacementMap in="SourceGraphic" scale="100"></feDisplacementMap>
+                        </filter>
                     </svg>
+                    <button class="button1 _1" type="submit">
+                        <span>Submit</span>
+                        <div class="back">
+                        </div>
+
+                    </button>
                 </div>
-            </div>
-            <button class="btn" type="button">Submit</button>
+            </form>
         </div>
+
     </main>
 </section>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="./drop.js"></script>
 <script>
-    const dropArea = document.querySelector(".upload");
 
-    dropArea.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropArea.classList.add("onHover");
-    });
+    function submitForm(event) {
+        document.querySelector("form").submit();
+    }
 
-    dropArea.addEventListener("dragleave", () => {
-        dropArea.classList.remove("onHover");
-    });
+    document.querySelector("html").classList.add('js');
 
-    dropArea.addEventListener("drop", (e) => {
-        e.preventDefault();
+    var fileInput = document.querySelector(".input-file"),
+        button = document.querySelector(".input-file-trigger"),
+        the_return = document.querySelector(".file-return");
 
-        const pdf = e.dataTransfer.files[0];
-        const type = pdf.type;
-
-        if (type == "application/pdf") {
-            return upload(pdf);
-        } else {
-            dropArea.setAttribute("class", "upload invalid");
-            dropArea.innerText = "Invalid File Format. Re-Upload";
-            return false;
+    button.addEventListener("keydown", function (event) {
+        if (event.keyCode == 13 || event.keyCode == 32) {
+            fileInput.focus();
         }
     });
+    button.addEventListener("click", function (event) {
+        fileInput.focus();
+        return false;
+    });
+    fileInput.addEventListener("change", function (event) {
+        the_return.innerHTML = this.value.split(`\\`)[this.value.split(`\\`).length - 1];
+    });
 
-    const upload = (pdf) => {
-        dropArea.setAttribute("class", "upload valid");
-        dropArea.innerText = "Added " + pdf.name;
-    };
+
 </script>
 </body>
 </html>

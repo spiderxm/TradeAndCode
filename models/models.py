@@ -68,11 +68,25 @@ class Team(models.Model):
     """
     id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
     teamCode = models.CharField(max_length=256, null=False)
-    createdBy = models.CharField(max_length=256)
+    createdBy = models.ForeignKey(User, on_delete=models.CASCADE)
     teamName = models.CharField(unique=True, max_length=256)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.teamName
+
+
+class PlayerTeam(models.Model):
+    """
+    Model to store team for user for a contest
+    """
+    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.player.username + " " + self.team.teamName
 
 
 class Submission(models.Model):

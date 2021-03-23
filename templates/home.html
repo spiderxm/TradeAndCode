@@ -676,7 +676,7 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: rgba(13, 164, 175);
+            background-color: rgb(13, 164, 175);
             font-size: 0.8em;
             -webkit-transition: left 500ms ease;
             transition: left 500ms ease;
@@ -854,7 +854,27 @@
             }
         }
 
-        .nav ul li.active a {
+        .logout-button {
+            background-color: transparent;
+            border: none;
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 15px 20px;
+            line-height: 4em;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .nav ul li.active a and .nav ul li.active button {
             color: white;
         }
 
@@ -951,25 +971,43 @@
 </label>
 <nav class="nav" style="overflow-y: scroll">
     <ul>
-        <img style="margin-left: 10%" width="80%" src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.webp"/>
+        <img style="margin-left: 10%; margin-top: -35%; margin-bottom: -10%" width="80%"
+             src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"/>
 
         <li class="active"><a href="">Home</a></li>
         {% if user.is_authenticated == False %}
             <li class="#"><a href="accounts/login">Login</a></li>
         {% endif %}
-        <li><a href="#">Market</a></li>
-        <li><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
-        <li><a href="#">Trade portal</a></li>
-        <li><a href="#">Transactions</a></li>
-        {% if user.is_authenticated == True %}
-            <li class="#"><a href="accounts/logout">Logout</a></li>
+
+        {% if contest is not None %}
+            <li><a href="#">Market</a></li>
+            <li><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
+            <li><a href="#">Trade portal</a></li>
+            <li><a href="#">Transactions</a></li>
         {% endif %}
         <li><a href="{% url 'developers' %}">Developers</a></li>
 
+        {% if user.is_authenticated == True %}
+            <form name="myForm" id="logout-form" method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <li class="">
+                    <button type="submit" class="logout-button">
+                        Sign out
+                    </button>
+                </li>
+            </form>
+        {% endif %}
     </ul>
 </nav>
+
 <div class="container">
-    <h2><span>Trade & Code</span><br/></h2>
+
+    <h2 style="display: block"><img style="margin: 0 auto; position: relative; top: 0; right: 0" width="200px"
+                                    src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"/>
+        <span>Trade & Code</span></h2>
     <a href="#about"
     >
         <div class="arrow-container animated fadeInDown">
@@ -1051,51 +1089,55 @@
                 ></polygon>
             </svg>
         </div>
-        <section id="timeline">
-            <div class="timeline">
-                <h2>Contest Details</h2>
-                <div class="content">
-                    <div class="card">
-                        <div class="icon"><i class="material-icons md-36">date_range</i></div>
-                        <p class="title">Date</p>
-                        <p>
-                        <ul class="text" style="opacity: 1 !important;">
-                            <li>{{ contest.date }}</li>
-                        </ul>
-                        </p>
+        {% if contest is not None %}
+            <section id="timeline">
+                <div class="timeline">
+                    <h2>Contest Details</h2>
+                    <div class="content">
+                        <div class="card">
+                            <div class="icon"><i class="material-icons md-36">date_range</i></div>
+                            <p class="title">Date</p>
+                            <p>
+                            <ul class="text" style="opacity: 1 !important;">
+                                <li>{{ contest.date }}</li>
+                            </ul>
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div class="icon"><i class="material-icons md-36">query_builder</i></div>
+                            <p class="title">Start time</p>
+                            <p>
+                            <ul class="text" style="opacity: 1 !important;">
+                                <li>{{ contest.start_time }}</li>
+                            </ul>
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div class="icon"><i class="material-icons md-36">insert_chart</i></div>
+                            <p class="title">Rounds</p>
+                            <p>
+                            <ul class="text" style="opacity: 1 !important;">
+                                <li>{{ contest.rounds }}</li>
+                            </ul>
+                            </p>
+                        </div>
+                        {#                    <div class="card">#}
+                        {#                        <div class="icon">#}
+                        {#                            <i class="material-icons md-36">alternate_email</i>#}
+                        {#                        </div>#}
+                        {#                        <p class="title">Registrations</p>#}
+                        {#                        <p>#}
+                        {#                        <ul class="text">#}
+                        {#                            <li>Date: {{ contest.date }}</li>#}
+                        {#                        </ul>#}
+                        {#                        </p>#}
+                        {#                    </div>#}
                     </div>
-                    <div class="card">
-                        <div class="icon"><i class="material-icons md-36">query_builder</i></div>
-                        <p class="title">Start time</p>
-                        <p>
-                        <ul class="text" style="opacity: 1 !important;">
-                            <li>{{ contest.start_time }}</li>
-                        </ul>
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="icon"><i class="material-icons md-36">insert_chart</i></div>
-                        <p class="title">Rounds</p>
-                        <p>
-                        <ul class="text" style="opacity: 1 !important;">
-                            <li>{{ contest.rounds }}</li>
-                        </ul>
-                        </p>
-                    </div>
-                    {#                    <div class="card">#}
-                    {#                        <div class="icon">#}
-                    {#                            <i class="material-icons md-36">alternate_email</i>#}
-                    {#                        </div>#}
-                    {#                        <p class="title">Registrations</p>#}
-                    {#                        <p>#}
-                    {#                        <ul class="text">#}
-                    {#                            <li>Date: {{ contest.date }}</li>#}
-                    {#                        </ul>#}
-                    {#                        </p>#}
-                    {#                    </div>#}
                 </div>
-            </div>
-        </section>
+            </section>
+        {% else %}
+            <h1 style="color: white; margin: 10vh auto">No contest present currently</h1>
+        {% endif %}
         <footer>
             <div class="contacts">
                 <h3>Contact Details-</h3>
@@ -1111,19 +1153,25 @@
                         <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
                     </li>
                     <li>
-                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="http://team-exe-website.herokuapp.com/" target="_blank"><i
+                                class="fab fa-chrome"></i></a>
                     </li>
                     <li>
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/teamexenith/" target="_blank"><i
+                                class="fab fa-instagram"></i></a>
                     </li>
                 </ul>
             </div>
         </footer>
     </div>
 </div>
-<script src="anime.min.js">
-
+<script type="text/javascript">
+    function submitform() {
+        document.myform.submit();
+    }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script>
     /*
  * anime.js v3.2.1
