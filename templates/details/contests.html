@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div style="padding: 1rem; text-align: center">
+            <img style="height: 25vh; border-radius: 2rem" alt="Logo"
+                 src="https://firebasestorage.googleapis.com/v0/b/tradeandcode.appspot.com/o/cover.png?alt=media&token=f61f3620-38df-49f5-88f5-bd0fbc69263f "/>
+        </div>
+        <div class="row">
+            {% for contest in contests %}
+                <div class="card" style="width: 28rem; margin: 3rem">
+                    <div class="card-body">
+                        <div class="modal-header">
+                            <h5 class="card-title">Details</h5>
+                        </div>
+                        <div>
+                            <div>
+                                <label>Description</label>
+                                <textarea disabled class="form-control">{{ contest.description }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input value="{{ contest.date }}" disabled class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input value="{{ contest.start_time }}" disabled class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Starting Currency</label>
+                                <input value="{{ contest.money_at_start }}" disabled class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div style="display: block">
+                                {% if request.user.is_superuser %}
+                                    <a href="{% url 'update-components-price' contest.id %}">
+                                        <button class="btn btn-primary btn-warning">Update Components Price</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+
+                            <a href="{% url 'contest-details' contest.id %}">
+                                <button class="btn btn-dark">Details</button>
+                            </a>
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'update-contest' contest.id %}">
+                                    <button class="btn btn-primary">Edit</button>
+                                </a>
+                            {% endif %}
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'delete-contest' contest.id %}">
+                                    <button class="btn btn-primary btn-danger">Delete</button>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h1>No contests present</h1>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+<div>
+    {{ contest.description }}
+
+</div>

@@ -1,0 +1,43 @@
+{% extends 'base/login.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {{ form.media }}
+{% endblock %}
+{% bootstrap_javascript jquery='full' %}
+{% block content %}
+    <div style="font-family: monospace; padding: 1rem">
+        <div style="margin: 0 auto; width: 500px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+             class="form">
+            <form method="POST" class="form-group">
+                <div class="modal-header">
+                    <h1>Login - Admin Panel</h1>
+                </div>
+                <div style="padding: 1rem">
+                    <img style="width: 100%; border-radius: 2rem" alt="Logo"
+                         src="https://firebasestorage.googleapis.com/v0/b/tradeandcode.appspot.com/o/cover.png?alt=media&token=f61f3620-38df-49f5-88f5-bd0fbc69263f "/>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <p>Your account doesn't have access to this page. To proceed,
+                                please login with an account that has access.</p>
+                        {% else %}
+                            <p>Please login to see this page.</p>
+                        {% endif %}
+                    {% endif %}
+                    {% bootstrap_form form %}
+                </div>
+                <div class="modal-footer">
+                    {% buttons %}
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    {% endbuttons %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

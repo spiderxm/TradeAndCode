@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {{ form.media }}
+{% endblock %}
+{% bootstrap_javascript jquery='full' %}
+{% block content %}
+    <div style="font-family: monospace; padding: 1rem">
+        <div style="margin: 0 auto; width: 500px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+             class="form">
+            <form method="POST" class="form-group">
+                <div class="modal-header">
+                    <h1>Update Component</h1>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% if message %}
+                        <p style="color: orangered"> {{ message }}</p>
+                    {% endif %}
+
+                    {% bootstrap_form form %}
+                </div>
+                <div class="modal-footer">
+                    {% buttons %}
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    {% endbuttons %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

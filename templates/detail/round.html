@@ -1,0 +1,179 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div style="font-family: monospace; padding: 1rem">
+            <div style="margin: 0 auto; width: 400px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+                 class="form">
+                <div>
+                    <div class="modal-header">
+                        <h4>Round Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label>Round Number</label>
+                            <input disabled class="form-control" value="{{ round.roundNumber }}"/>
+                        </div>
+                        <div style="height: 20px">
+
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input value="{{ round.roundName }}" disabled class="form-control"/>
+                        </div>
+                        <div style="height: 20px">
+
+                        </div>
+                        {% if round.startTime %}
+                            <div class="form-group">
+                                <label>Start-Time</label>
+                                <input value="{{ round.startTime }}" disabled class="form-control"/>
+                            </div>
+                        {% endif %}
+                        <div style="height: 20px">
+
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{% url 'update-round' round.id %}">
+                                <button class="btn btn-primary">Edit</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="height:20px">
+
+        </div>
+        <h1 style="font-family: monospace; text-align: center">Question Detail</h1>
+        <div style="font-family: monospace; padding: 1rem">
+            <div style="margin: 0 auto; width: 80vw; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+                 class="form">
+                <div class="modal-header">
+                    <h4>Question Details</h4>
+                </div>
+                <div>
+                    <div style="height: 10px">
+
+                    </div>
+                    <div class="form-group">
+                        <label><h6>Title</h6></label>
+                        <input class="form-control" disabled value="{{ question.title }}"/>
+                    </div>
+
+                    <div style="height: 10px">
+
+                    </div>
+                    <div class="form-group">
+                        <label><h6>Description</h6></label>
+                        <textarea class="form-control" disabled>{{ question.description }}</textarea>
+                    </div>
+                    <div style="height: 10px">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label><h6>Input</h6></label>
+                        <textarea class="form-control" disabled>{{ question.input }}</textarea>
+                    </div>
+                    <div style="height: 10px">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label><h6>Output</h6></label>
+                        <textarea class="form-control" disabled>{{ question.output }}</textarea>
+                    </div>
+
+                    <div style="height: 10px">
+
+                    </div>
+                    <div class="form-group">
+                        <label><h6>Test Input</h6></label>
+                        <textarea class="form-control" disabled>{{ question.test_input }}</textarea>
+                    </div>
+
+                    <div style="height: 10px">
+
+                    </div>
+                    <div class="form-group">
+                        <label><h6>Test Output</h6></label>
+                        <textarea class="form-control" disabled>{{ question.test_output }}</textarea>
+                    </div>
+                    <div style="height: 10px">
+
+                    </div>
+                    <div class="form-group">
+                        <label><h6>Points</h6></label>
+                        <input class="form-control" disabled value="{{ question.points }}"/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'update-question' question.id %}">
+                        <button class="btn btn-primary">Edit</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div style="font-family: monospace; padding: 1rem">
+                <div>
+                    <div class="modal-header">
+                        <h3>Submissions</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-hover table-dark">
+            <thead>
+            {% if submissions %}
+                <tr>
+                    <th>Team Name</th>
+                    <th>Language Used</th>
+                    <th>Checked Or Not</th>
+                    <th>Checked By</th>
+                    <th>Points Given</th>
+                    <th>Time of Submission</th>
+                    <th>Options</th>
+                </tr>
+            {% endif %}
+            </thead>
+            <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.teamCode.teamName }}</td>
+                    <td>{{ submission.languageUsed }}</td>
+                    <td>{{ submission.checkedOrNot }}</td>
+                    <td>{{ submission.checkedBy.username }}</td>
+                    <td>{{ submission.points }}</td>
+                    <td>{{ submission.timeOfSubmission }}</td>
+                    <td>
+                        {% if submission.checkedOrNot is False %}
+                            <a href="{% url 'check-submission' submission.id %}">
+                                <button class="btn btn-primary">
+                                    Check Question
+                                </button>
+                            </a>
+                        {% else %}
+                            <h6 style="text-align: center">
+                                Question Already Checked
+                            </h6>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <div class="alert"><h6>No submissions yet</h6></div>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

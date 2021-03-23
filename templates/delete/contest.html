@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {{ form.media }}
+{% endblock %}
+{% bootstrap_javascript jquery='full' %}
+{% block content %}
+    <div style="font-family: monospace; padding: 1rem">
+        <div style="margin: 0 auto; width: 500px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+             class="form">
+            <form method="POST" class="form-group">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h1>Are You Sure You Want to delete this Contest?</h1>
+                </div>
+                <div class="modal-footer">
+                    {% buttons %}
+                        <a href="{% url 'ContestsList' %}">
+                            <button type="button" class="btn btn-primary">Cancel</button>
+                        </a>
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                    {% endbuttons %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

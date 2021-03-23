@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {{ form.media }}
+{% endblock %}
+{% bootstrap_javascript jquery='full' %}
+{% block content %}
+    <div style="font-family: monospace; padding: 1rem">
+        <div style="margin: 0 auto; width: 80%; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem">
+            <div class="modal-header">
+                <h3>Submission Detail</h3>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label>
+                        Language Used
+                    </label>
+                    <input value="{{ submission.languageUsed }}" disabled class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    Team Name
+                </label>
+                <input value="{{ submission.teamCode.teamName }}" disabled class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label>
+                    Time of Submission
+                </label>
+                <input value="{{ submission.timeOfSubmission }}" disabled class="form-control"/>
+            </div>
+
+            <div>
+                <label>
+                    Code
+                </label>
+                <div style=" overflow-x: scroll;margin: 1rem; background-color: lightgrey; padding: 1rem; border-radius: 20px">
+                        {% for codeline in code %}
+                            <div style="white-space: pre; font-size: 15px;">{{ codeline }}</div>
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="font-family: monospace; padding: 1rem">
+        <div style="margin: 0 auto; width: 500px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+             class="form">
+            <form method="POST" class="form-group">
+                <div class="modal-header">
+                    <h1>Check Submission</h1>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% if message %}
+                        <p style="color: orangered"> {{ message }}</p>
+                    {% endif %}
+
+                    {% bootstrap_form form %}
+                </div>
+                <div class="modal-footer">
+                    {% buttons %}
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    {% endbuttons %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div style="font-family: monospace; padding: 1rem">
+        <div style="margin: 0 auto; width: 500px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem">
+            <div class="modal-header">
+                <h5>Guide Lines</h5>
+            </div>
+            <br/>
+            <div>
+                <ul>
+                    <li><h6>Max points for the question - <strong>{{ question.points }}.</strong></h6></li>
+                    <li><h6>You can check the question only once.</h6></li>
+                    <li><h6>Checking should be unbiased. </h6></li>
+                    <li><h6>It will be known who checked the submission.</h6></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

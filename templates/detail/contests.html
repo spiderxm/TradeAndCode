@@ -1,0 +1,148 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div style="font-family: monospace; padding: 1rem">
+            <div style="margin: 0 auto; width: 500px; padding: .5rem;  box-shadow: 5px 5px 10px 5px #888888;border-radius: 1rem"
+                 class="form">
+                <div>
+                    <div class="modal-header">
+                        <h4>Contest Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>
+                                Contest Date
+                            </label>
+                            <input value="{{ contest.date }}" disabled class="form-control"/>
+                        </div>
+                        <div style="height: 20px">
+
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Contest Start Time
+                            </label>
+                            <input value="{{ contest.start_time }}" disabled class="form-control"/>
+                        </div>
+                        <div style="height: 20px">
+
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Starting Currency
+                            </label>
+                            <input value="{{ contest.money_at_start }}" disabled class="form-control"/>
+                        </div>
+                        <div style="height: 20px">
+
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Description
+                            </label>
+                            <textarea disabled class="form-control">{{ contest.description }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'create-components' contest.id %}">
+                            <button class="btn btn-dark">Create Components</button>
+
+                        </a>
+                        <a href="{% url 'update-contest' contest.id %}">
+                            <button class="btn btn-primary">Edit</button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="height:20px">
+
+        </div>
+        <h1 style="font-family: monospace; text-align: center">Round Details </h1>
+        <div class="row">
+            {% for round in rounds %}
+                <div class="card" style="width: 24rem; margin: 3rem">
+                    <div class="card-body">
+                        <h5 class="card-title">Round Detail</h5>
+                        <div>
+                            <label>Round Number</label>
+                            <input disabled class="form-control" value="{{ round.roundNumber }}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input value="{{ round.roundName }}" disabled class="form-control"/>
+                        </div>
+                        {% if round.startTime %}
+                            <div class="form-group">
+                                <label>Start-Time</label>
+                                <input value="{{ round.startTime }}" disabled class="form-control"/>
+                            </div>
+                        {% endif %}
+
+                        <div class="modal-footer">
+                            <a href="{% url 'round-details' round.id %}">
+                                <button class="btn btn-dark">Details</button>
+                            </a>
+                            <a href="{% url 'update-round' round.id %}">
+                                <button class="btn btn-primary">Edit</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h6 style="text-align: center; margin: 2rem">No rounds present</h6>
+            {% endfor %}
+        </div>
+        <h1 style="font-family: monospace; text-align: center">components Details </h1>
+        <div class="row">
+            {% for component in components %}
+                <div class="card" style="width: 34rem; margin: 3rem">
+                    <div class="card-body">
+                        <div class="modal-header">
+                            <h5 class="card-title">Component Detail</h5>
+                        </div>
+
+                        <div>
+                            <div>
+                                <label>Component Name</label>
+                                <input disabled class="form-control" value="{{ component.componentName }}"/>
+                            </div>
+                            <div style="height: 10px">
+
+                        </div>
+                            <div class="form-group">
+                                <label>Component Price</label>
+                                <input value="{{ component.componentPrice }}" disabled class="form-control"/>
+                            </div>
+                            <div style="height: 10px">
+
+                        </div>
+                            <div class="form-group">
+                                <label>Component Description</label>
+                                <textarea style="height: 100px" disabled class="form-control">{{ component.componentDescription }}</textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{% url 'update-component' component.id %}">
+                                <button class="btn btn-primary">Update</button>
+                            </a>
+                            <a href="{% url 'delete-component' component.id %}">
+                                <button class="btn btn-danger">Delete</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            {% empty %}
+                <h6 style="text-align: center; margin: 2rem">No components present. add Some <a
+                        href="{% url 'create-components' contest.id %}">
+                    <button class="btn btn-dark">Create Components</button>
+                </a></h6>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
