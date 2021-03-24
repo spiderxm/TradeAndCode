@@ -4,7 +4,9 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Solving..</title>
+    <title>Round {{ round.roundNumber }}</title>
+    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
+
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
@@ -602,39 +604,44 @@
             <h2>{{ question.points }} coins</h2>
         </div>
         <div class="bar">
-            <form method="post">
-                {% csrf_token %}
-                <p class="file-return"></p>
-                <div class="input-file-container">
-                    <input
-                            class="input-file"
-                            id="my-file"
-                            type="file"
-                            accept=".cpp,.c"
-                    />
-                    <label tabindex="0" for="my-file" class="input-file-trigger"
-                    >Select a file...</label
-                    >
+            {% if submission is False %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p class="file-return"></p>
+                    <div class="input-file-container">
+                        <input
+                                class="input-file"
+                                id="my-file"
+                                type="file"
+                                accept=".cpp,.c"
+                                name="submission"
+                        />
+                        <label tabindex="0" for="my-file" class="input-file-trigger"
+                        >Select a file...</label
+                        >
 
-                    <svg width="0" height="0">
-                        <filter id="filter">
-                            <feTurbulence
-                                    type="fractalNoise"
-                                    baseFrequency=".01"
-                                    numOctaves="6"
-                            ></feTurbulence>
-                            <feDisplacementMap
-                                    in="SourceGraphic"
-                                    scale="100"
-                            ></feDisplacementMap>
-                        </filter>
-                    </svg>
-                    <button class="button1 _1" type="submit">
-                        <span>Submit</span>
-                        <div class="back"></div>
-                    </button>
-                </div>
-            </form>
+                        <svg width="0" height="0">
+                            <filter id="filter">
+                                <feTurbulence
+                                        type="fractalNoise"
+                                        baseFrequency=".01"
+                                        numOctaves="6"
+                                ></feTurbulence>
+                                <feDisplacementMap
+                                        in="SourceGraphic"
+                                        scale="100"
+                                ></feDisplacementMap>
+                            </filter>
+                        </svg>
+                        <button class="button1 _1" type="submit">
+                            <span>Submit</span>
+                            <div class="back"></div>
+                        </button>
+                    </div>
+                </form>
+            {% else %}
+                <h1>Submission Done</h1>
+            {% endif %}
         </div>
     </main>
 </section>

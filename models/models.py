@@ -26,7 +26,7 @@ class Question(models.Model):
     """
     Model for Questions used during coding Competition
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     roundId = models.ForeignKey("Round", on_delete=models.CASCADE)
     title = models.CharField(max_length=256, null=True, blank=True)
     description = models.TextField(max_length=5000, null=True, blank=True)
@@ -41,7 +41,7 @@ class Round(models.Model):
     """
     Model for roundDetails of coding competitions
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     contestId = models.ForeignKey("Contest", on_delete=models.CASCADE)
     roundNumber = models.PositiveSmallIntegerField()
     roundName = models.CharField(max_length=256)
@@ -52,7 +52,7 @@ class Components(models.Model):
     """
     Model for Components details used during the Competition
     """
-    id = models.CharField(max_length=256, default=uuid.uuid1(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid1, primary_key=True)
     contestId = models.ForeignKey("Contest", on_delete=models.CASCADE)
     componentName = models.CharField(max_length=256)
     componentDescription = models.TextField(max_length=256)
@@ -97,9 +97,31 @@ class Submission(models.Model):
     id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
     roundId = models.ForeignKey("Round", on_delete=models.CASCADE)
     teamCode = models.ForeignKey("Team", on_delete=models.PROTECT)
-    fileUrl = models.URLField(max_length=256, null=False)
     languageUsed = models.CharField(max_length=256, null=False)
     timeOfSubmission = models.DateTimeField(auto_now_add=True)
     points = models.PositiveIntegerField(default=None, blank=True, null=True)
     checkedOrNot = models.BooleanField(default=False)
+    file = models.FileField(upload_to='solutions/')
     checkedBy = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
+
+
+class Transaction(models.Model):
+    """
+    Model for storing transactions
+    """
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    message = models.TextField(max_length=1024)
+    balance = models.BigIntegerField()
+    mode = models.CharField(max_length=256, choices=(('Credit', 'Credit'), ('Debit', 'Debit')))
+    datetime = models.DateTimeField(auto_now=True)
+    changeAmount = models.BigIntegerField()
+    previousBalance = models.BigIntegerField()
+
+
+class TeamComponents(models.Model):
+    """
+    Model to store components of a team
+    """
+    component = models.ForeignKey(Components, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)

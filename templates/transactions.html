@@ -1,0 +1,138 @@
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
+    <title>Transactions</title>
+    <link
+            href="https://fonts.googleapis.com/css?family=Lato"
+            rel="stylesheet"
+    />
+    <style>
+        body {
+            font-family: "lato", sans-serif;
+            background: #222;
+        }
+
+        .container {
+            margin-left: 3vw;
+            margin-right: 3vw;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            margin: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        .responsive-table li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .responsive-table .table-header {
+            background-color: #0aa6b1;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .responsive-table .table-row {
+            background-color: #8b8b8b;
+            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-table .col-1 {
+            flex-basis: 10%;
+        }
+
+        .responsive-table .col-2 {
+            flex-basis: 40%;
+        }
+
+        .responsive-table .col-3 {
+            flex-basis: 25%;
+        }
+
+        .responsive-table .col-4 {
+            flex-basis: 25%;
+        }
+
+        @media all and (max-width: 767px) {
+            .responsive-table .table-header {
+                display: none;
+            }
+
+            .responsive-table li {
+                display: block;
+            }
+
+            .responsive-table .col {
+                flex-basis: 100%;
+            }
+
+            .responsive-table .col {
+                display: flex;
+                padding: 10px 0;
+            }
+
+            .responsive-table .col:before {
+                color: #ffffff;
+                padding-right: 10px;
+                font-size: 20px;
+                text-transform: uppercase;
+                content: attr(data-label);
+                flex-basis: 50%;
+                text-align: right;
+            }
+
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Transactions for {{ team.teamName }}</h2>
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">S no.</div>
+            <div class="col col-2">Message</div>
+            <div class="col col-3">Previous Balance</div>
+            <div class="col col-3">Credit</div>
+            <div class="col col-3">Debit</div>
+            <div class="col col-4">Balance</div>
+        </li>
+        {% for transaction in transactions %}
+            <li class="table-row">
+                <div class="col col-1" data-label="S.no">{{ forloop.counter }}.)</div>
+                <div class="col col-2" data-label="Message">{{ transaction.message }}</div>
+                <div class="col col-3" data-label="Previous Balance">{{ transaction.previousBalance|intcomma }}</div>
+                {% if transaction.mode == 'Credit' %}
+                    <div class="col col-3" data-label="Credit">+ {{ transaction.changeAmount|intcomma }}</div>
+                    <div class="col col-3" data-label="Debit">0</div>
+                {% else %}
+                    <div class="col col-3" data-label="Credit">0</div>
+                    <div class="col col-3" data-label="Debit">- {{ transaction.changeAmount|intcomma }}</div>
+                {% endif %}
+                <div class="col col-4" data-label="Current Balance">{{ transaction.balance|intcomma }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

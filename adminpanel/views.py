@@ -1,5 +1,7 @@
+import os
 import uuid
 import requests
+from django.conf import settings
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -335,6 +337,7 @@ class CheckSubmission(LoginRequiredMixin, PermissionRequiredMixin, View):
     """
     Request to handle the functionality to check a question
     """
+    permission_required = "auth.admin"
 
     def get(self, request, id):
         """
@@ -343,8 +346,10 @@ class CheckSubmission(LoginRequiredMixin, PermissionRequiredMixin, View):
         submission = get_object_or_404(Submission, pk=id)
         question = Question.objects.get(roundId_id=submission.roundId.id)
         form = SubmissionForm(initial={'points': question.points})
-        response = requests.get(submission.fileUrl)
-        code = response.text.split("\n")
+        file = submission.file.open()
+        content = file.read()
+        file.close()
+        code = str(content, 'utf-8').split("\n")
         Code = [" " + codeline for i, codeline in enumerate(code) if codeline is not ""]
         context = {
             "form": form,
@@ -405,3 +410,5 @@ class UpdateComponentsPrice(LoginRequiredMixin, PermissionRequiredMixin, View):
                 component.componentPrice = int(float(component.componentPrice) / float(data["factor"]))
             component.save()
         return HttpResponseRedirect(reverse_lazy('ContestsList'))
+
+

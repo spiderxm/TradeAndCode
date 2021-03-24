@@ -1,10 +1,11 @@
+{% load social_share %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Team Registration</title>
+    <title>{% if isalreadyinTeam is False %}Registration{% else %}Team Details{% endif %}</title>
     <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
@@ -583,6 +584,11 @@
                     aria-hidden="true"
                     style="font-size: 24px"
                     onclick='copyToClipboard("{{ team.teamCode }}")'></i>
+                <a href="https://web.whatsapp.com/send?text=Join our team {{ team.teamName }} with Code {{ team.teamCode }}"
+                   data-action="share/whatsapp/share" target="_blank" style="text-decoration: none"><i
+                        class="fa fa-whatsapp copy-button"
+                        aria-hidden="true"
+                        style="font-size: 26px;color: antiquewhite"></i></a>
             </p>
 
             <h3>

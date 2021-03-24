@@ -1,3 +1,5 @@
+{% load social_share %}
+
 {% load account %}
 <!DOCTYPE html>
 <html lang="en">
@@ -972,14 +974,14 @@
         {% endif %}
 
         {% if contest is not None %}
+            <li><a href="{% url 'register' %}">Team</a></li>
             <li><a href="{% url 'market' %}">Market</a></li>
             <li><a href="{% url 'rounds' %}">Rounds</a></li>
             <li><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
             <li><a href="#">Trade portal</a></li>
-            <li><a href="#">Transactions</a></li>
+            <li><a href="{% url 'transactions' %}">Transactions</a></li>
         {% endif %}
         <li><a href="{% url 'developers' %}">Developers</a></li>
-
         {% if user.is_authenticated == True %}
             <form name="myForm" id="logout-form" method="post" action="{% url 'account_logout' %}">
                 {% csrf_token %}
@@ -993,6 +995,11 @@
                 </li>
             </form>
         {% endif %}
+        <li>
+            <a href="https://web.whatsapp.com/send?text=Come and play Trade and Code Organised by Team .exe NIT Hamirpur on {{ request.build_absolute_uri }}"
+               data-action="share/whatsapp/share" target="_blank" style="text-decoration: none">Share via Whatsapp</a>
+        </li>
+
     </ul>
 </nav>
 

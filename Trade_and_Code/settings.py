@@ -41,13 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
     'allauth',
     'adminpanel',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
-    'bootstrap4'
+    'bootstrap4',
+    'django_social_share'
 ]
 SITE_ID = 1
 MIDDLEWARE = [
@@ -143,3 +145,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

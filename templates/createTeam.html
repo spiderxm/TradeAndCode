@@ -4,7 +4,10 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
+    <link
+            rel="icon"
+            href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png"
+    />
     <title>Create Team</title>
     <style>
         body {
@@ -31,19 +34,34 @@
             color: #fff;
         }
 
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         .form-title {
             margin-bottom: 15px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-family: monospace;
         }
 
         .form-button {
             width: 100%;
             padding: 10px;
-            margin-top: 50px;
+            margin-top: 30px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
             max-width: 400px;
             text-align: center;
+            color: #fff;
             border: solid 1px white;
             outline: 1px solid white;
-            color: white;
             outline-offset: 2px;
             background-color: transparent;
             -webkit-transition: color 0.2s ease-in, background-color 0.2s ease-in;
@@ -107,20 +125,36 @@
 <body>
 <section>
     <div class="modal">
+        <img style="margin-bottom: 1rem" width="200px"
+             src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"/>
+
         <div class="container" style="text-align: center; margin-top: 10px">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                        <h5 style="font-size: 20px; letter-spacing: 3px; font-family: monospace; color: rgba(255 ,0 , 0, 1)">{{ message }}</h5>
-                    </div>
-                {% endfor %}
-            {% endif %}
+            {% if messages %} {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    <h5
+                            style="
+                font-size: 20px;
+                letter-spacing: 3px;
+                font-family: monospace;
+                color: rgba(255, 0, 0, 1);
+              "
+                    >
+                        {{ message }}
+                    </h5>
+                </div>
+            {% endfor %} {% endif %}
         </div>
         <form method="post">
             {% csrf_token %}
             <div class="form-title">Create Team</div>
             <div class="input-group">
-                <input type="text" name="teamName" onblur="checkInput(this)" required minlength="3"/>
+                <input
+                        type="text"
+                        name="teamName"
+                        onblur="checkInput(this)"
+                        required
+                        minlength="3"
+                />
                 <label for="name">Team Name</label>
             </div>
             <button class="form-button" type="submit">Register</button>
