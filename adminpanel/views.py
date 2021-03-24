@@ -59,7 +59,7 @@ class CreateContest(LoginRequiredMixin, PermissionRequiredMixin, View):
                     id=uuid.uuid4(),
                     contestId=contest,
                     roundNumber=i,
-                    roundName=f"Round{str(i)}"
+                    roundName=f"Round {str(i)}"
                 )
                 round.save()
                 Question.objects.create(
@@ -77,14 +77,13 @@ class UpdateContest(LoginRequiredMixin, PermissionRequiredMixin, View):
     """
     permission_required = "auth.admin"
 
-    @staff_member_required
     def get(self, request, id):
         """
         Get Update Contest Page (with form)
         """
         contest = get_object_or_404(Contest, pk=id)
         form = ContestFormForEdit(instance=contest)
-        return render(request, "add/createContest.html", context={"form": form, "docTitle": "Edit Contest"})
+        return render(request, "update/updateContest.html", context={"form": form, "docTitle": "Edit Contest"})
 
     def post(self, request, id):
         """
@@ -347,7 +346,6 @@ class CheckSubmission(LoginRequiredMixin, PermissionRequiredMixin, View):
         response = requests.get(submission.fileUrl)
         code = response.text.split("\n")
         Code = [" " + codeline for i, codeline in enumerate(code) if codeline is not ""]
-        print(Code)
         context = {
             "form": form,
             "submission": submission,

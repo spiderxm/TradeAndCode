@@ -4,10 +4,11 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
     <title>Create Team</title>
     <style>
         body {
-            background: #2b0606;
+            background: #2b0000;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -106,6 +107,15 @@
 <body>
 <section>
     <div class="modal">
+        <div class="container" style="text-align: center; margin-top: 10px">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <h5 style="font-size: 20px; letter-spacing: 3px; font-family: monospace; color: rgba(255 ,0 , 0, 1)">{{ message }}</h5>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <form method="post">
             {% csrf_token %}
             <div class="form-title">Create Team</div>

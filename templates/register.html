@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Team Registration</title>
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
     <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
@@ -530,42 +534,84 @@
                 font-size: 14px;
             }
         }
+
+        .copy-button:hover {
+            color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <section>
     <header><h1>Trade and Code</h1></header>
     <div class="container">
-        <h2>Event Team Registration</h2>
-        <p>
-            Trade and Code is a team event (each team can have maximum 3 members)
-        </p>
-        <h3>What will you do..?</h3>
 
-        <div class="row">
-            <div id="mainButton">
-                <a href="{% url 'createTeam' %}" id="btn1" class="btn-text" onclick="openForm()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Be the leader
-                </a>
+        {% if isalreadyinTeam is False %}
+            <h2>Event Team Registration</h2>
+            <p>
+                Trade and Code is a team event (each team can have maximum 3 members)
+            </p>
+            <h3>What will you do..?</h3>
+
+            <div class="row">
+                <div id="mainButton">
+                    <a href="{% url 'createTeam' %}" id="btn1" class="btn-text" onclick="openForm()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Be the leader
+                    </a>
+                </div>
+
+
+                <div id="mainButton2">
+                    <a href="{% url 'joinTeam' %}" id="btn2" class="btn-text" onclick="openForm2()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Join a Team
+                    </a>
+                </div>
             </div>
+        {% else %}
+            <h2>You are already part of a team : {{ team.teamName }}</h2>
+            <p>
+                Team Code <strong style="font-size: 20px" id="team-code">: {{ team.teamCode }}</strong> <i
+                    class="fa fa-clone copy-button"
+                    aria-hidden="true"
+                    style="font-size: 24px"
+                    onclick='copyToClipboard("{{ team.teamCode }}")'></i>
+            </p>
 
+            <h3>
+                Team Members
+            </h3>
+            <ul>
+                {% for player in players %}
+                    <li style="margin: 1rem; font-size: 20px">{{ player.player.first_name }} {{ player.player.last_name }}
+                        {% if team.createdBy == player.player %}<strong>(Leader)</strong>{% endif %}</li>
+                {% endfor %}
+            </ul>
 
-            <div id="mainButton2">
-                <a href="{% url 'joinTeam' %}" id="btn2" class="btn-text" onclick="openForm2()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Join a Team
-                </a>
-            </div>
-        </div>
+            {% if numberOfPlayers == 3 %}
+                <p>Note : You team is full</p>
+            {% elif numberOfPlayers == 2 %}
+                <p>Note : You can still invite 1 people to join your team</p>
+            {% elif numberOfPlayers == 1 %}
+                <p>Note : You can still invite 2 people to join your team</p>
+            {% endif %}
+        {% endif %}
     </div>
 </section>
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function () {
+        }, function (err) {
+        });
+    }
+</script>
 <script>
     var button = document.getElementById('mainButton');
 
@@ -602,6 +648,7 @@
             closeForm();
         }
     }
+
 </script>
 </body>
 </html>

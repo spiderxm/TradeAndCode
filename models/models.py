@@ -52,7 +52,7 @@ class Components(models.Model):
     """
     Model for Components details used during the Competition
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid1(), primary_key=True)
     contestId = models.ForeignKey("Contest", on_delete=models.CASCADE)
     componentName = models.CharField(max_length=256)
     componentDescription = models.TextField(max_length=256)
@@ -71,6 +71,7 @@ class Team(models.Model):
     createdBy = models.ForeignKey(User, on_delete=models.CASCADE)
     teamName = models.CharField(unique=True, max_length=256)
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    coins = models.BigIntegerField(default=10000)
 
     def __str__(self):
         return self.teamName

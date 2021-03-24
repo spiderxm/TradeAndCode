@@ -370,49 +370,43 @@
     </ul>
 </nav>
 <div class="wrapper">
-    <h1>Leader Board</h1>
-    <hr/>
-    <div class="lboard_section">
-        <div class="lboard_tabs">
-            <div class="tabs">
-                <ul>
-                    <li>Team Name</li>
-                    <li>Score</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <h1>Trade & Code Leader Board</h1>
+
     <hr id="hr2">
     <div class="lboard_wrap">
         <div class="lboard_item">
-            <div class="lboard_member">
-                <div class="image">
-                    <img src="https://i.ibb.co/b13pRCt/clipart1941988.png"
-                         alt=" ##"/>
-                </div>
-                <div class="name_bar">
-                    <p><span>1. </span>kgb</p>
-                    <div class="bar_wrap">
-                        <div class="inner_bar" style="width: 10%">
+            {% for team in teams %}
+                <div class="lboard_member" style="overflow-x: scroll">
+                    <div>
+                        <strong style="font-size: 20px; letter-spacing: 1px">
+                            {{ forloop.counter }}.)
+                        </strong>
+                    </div>
+                    <div class="name_bar">
+                        <p><span></span>{{ team.teamName }}
+                            - {{ team.createdBy.first_name }} {{ team.createdBy.last_name }}</p>
+                        <div class="bar_wrap">
+                            <div class="inner_bar" style="width: {% widthratio team.coins maxcoins 100 %}%">
+                            </div>
                         </div>
                     </div>
+                    <div class="points">{{ team.coins }}</div>
                 </div>
-                <div class="points">100000 pts</div>
-            </div>
-            <div class="lboard_member">
-                <div class="image">
-                    <img src="https://i.ibb.co/b13pRCt/clipart1941988.png" "
-                    alt=" ##" />
-                </div>
-                <div class="name_bar">
-                    <p><span>1. </span>Team Random</p>
-                    <div class="bar_wrap">
-                        <div class="inner_bar" style="width: 90%">
+            {% empty %}
+                <div class="lboard_member">
+                    <div class="image">
+                    </div>
+                    <div class="name_bar">
+                        <p>No Team Present</p>
+                        <div class="bar_wrap">
+                            <div class="inner_bar" style="width: 10%">
+                            </div>
                         </div>
                     </div>
+                    <div class="points">100000 pts</div>
                 </div>
-                <div class="points">900 pts</div>
-            </div>
+            {% endfor %}
+
         </div>
     </div>
 </div>

@@ -22,8 +22,7 @@
             rel="stylesheet"
     />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <link rel="stylesheet" href="./timelineCard.css"/>
-    <link rel="stylesheet" href="./footer.css"/>
+
     <style>
         .arrow-container {
             width: 100px;
@@ -112,7 +111,6 @@
 
 
         footer {
-            height: 10vh;
             background-color: rgba(13, 164, 175, 0.7);
             display: flex;
             flex-direction: row;
@@ -710,13 +708,6 @@
             color: rgba(255, 255, 255, 0.35);
         }
 
-        footer {
-            height: 10vh;
-            background-color: rgba(13, 164, 175, 0.7);
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
 
         .contacts {
             width: 50%;
@@ -961,6 +952,7 @@
 
 
     </style>
+
 </head>
 <body>
 <input type="checkbox" id="menu"/>
@@ -980,7 +972,8 @@
         {% endif %}
 
         {% if contest is not None %}
-            <li><a href="#">Market</a></li>
+            <li><a href="{% url 'market' %}">Market</a></li>
+            <li><a href="{% url 'rounds' %}">Rounds</a></li>
             <li><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
             <li><a href="#">Trade portal</a></li>
             <li><a href="#">Transactions</a></li>
@@ -1171,7 +1164,6 @@
     }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 <script>
     /*
  * anime.js v3.2.1

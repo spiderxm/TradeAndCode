@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Join Team</title>
+    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
     <style>
         body {
             background: rgb(23, 95, 95);
@@ -105,12 +106,24 @@
 <body>
 <section>
     <div class="modal">
-        <div class="form-title">Join Team</div>
-        <div class="input-group">
-            <input type="text" id="name"/>
-            <label for="name">Team Code</label>
+        <div class="container" style="text-align: center; margin-top: 10px">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <h5 style="font-size: 20px; letter-spacing: 3px; font-family: monospace; color: rgba(255 ,0 , 0, 1)">{{ message }}</h5>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="form-button">Join</div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-title">Join Team</div>
+            <div class="input-group">
+                <input type="text" id="name" name="teamCode"/>
+                <label for="name">Team Code</label>
+            </div>
+            <button class="form-button" type="submit">Join Team</button>
+        </form>
     </div>
 </section>
 </body>

@@ -216,7 +216,6 @@
             transition: ease-in-out 0.5s;
             width: 80%;
             margin: 0 auto;
-            margin-top: 40px;
         }
 
         main {
@@ -225,7 +224,7 @@
             flex-direction: column;
             width: 100%;
             max-height: 10%;
-            padding: 80px 60px;
+            padding: 60px 60px;
             z-index: 0;
         }
 
@@ -244,42 +243,10 @@
             border-radius: 10px;
         }
 
-        .color {
-            position: absolute;
-            filter: blur(150px);
-            width: 200px;
-            height: 200px;
-        }
-
-        .color:nth-child(1) {
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 200px;
-            background: #5e42a6;
-        }
-
-        .color:nth-child(2) {
-            bottom: -300px;
-            right: -60px;
-            width: 300px;
-            height: 300px;
-            background: #5e42a6;
-        }
-
-        .color:nth-child(3) {
-            bottom: -400px;
-            left: 60px;
-            width: 200px;
-            height: 200px;
-            background: #5e42a6;
-        }
-
         .bar {
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
             width: 80%;
             margin: 0 auto;
             margin-top: 50px;
@@ -299,46 +266,20 @@
             margin-right: 10px;
         }
 
-        .bar .onHover {
-            color: #fff;
-            border: 1px dotted #fff;
+        /* .bar .onHover {
+          color: #fff;
+          border: 1px dotted #fff;
         }
 
         .bar .valid {
-            color: cyan;
-            border: 1px solid cyan;
+          color: cyan;
+          border: 1px solid cyan;
         }
 
         .bar .invalid {
-            color: red;
-            border: 1px dashed red;
-        }
-
-        .bar .btn {
-
-            display: flex;
-            padding: 10px 60px;
-            width: 100px;
-            justify-content: center;
-            align-items: center;
-            background-color: transparent;
-            border: 2px solid white;
-            outline: 1px solid #fff;
-            outline-offset: -1px;
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 18px;
-            cursor: pointer;
-            transition: outline-offset 0.1s;
-            transition: letter-spacing 0.2s;
-            border-radius: 10px;
-        }
-
-        .btn:hover {
-            outline-offset: 4px;
-            letter-spacing: 1px;
-            border-radius: 10px;
-        }
+          color: red;
+          border: 1px dashed red;
+        } */
 
         .form {
             width: 500px;
@@ -387,35 +328,44 @@
 
         .input-file-container {
             position: relative;
-            width: 225px;
+            width: 250px;
         }
 
         .js .input-file-trigger {
             display: block;
             padding: 14px 45px;
-            background: #39D2B4;
-            color: #fff;
+            border: 1px solid #00c7ec;
+            color: #00c7ec;
             font-size: 1em;
-            transition: all .4s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.4s;
             cursor: pointer;
+            transition: all 0.2s ease-in;
         }
 
         .js .input-file {
             position: absolute;
             top: 0;
             left: 0;
-            width: 225px;
+            width: 250px;
             opacity: 0;
             padding: 14px 0;
             cursor: pointer;
+            border-radius: 20px;
         }
 
         .js .input-file:hover + .input-file-trigger,
         .js .input-file:focus + .input-file-trigger,
         .js .input-file-trigger:hover,
         .js .input-file-trigger:focus {
-            background: #34495E;
-            color: #39D2B4;
+            color: white;
+            box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
+            background-color: #00c8ecb2;
+            -webkit-transition: all 0.2s ease-out;
+            -moz-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+            border-radius: 40px;
         }
 
         .file-return {
@@ -428,7 +378,7 @@
 
         .js .file-return {
             font-style: italic;
-            font-size: .9em;
+            font-size: 0.9em;
             font-weight: bold;
         }
 
@@ -438,17 +388,15 @@
             font-weight: normal;
         }
 
-
-        h1, h2 {
-            margin-bottom: 5px;
+        h1,
+        h2 {
             font-weight: normal;
             text-align: center;
             color: #aaa;
         }
 
         h2 {
-            margin: 5px 0 2em;
-            color: #1ABC9C;
+            color: #1abc9c;
         }
 
         form {
@@ -463,7 +411,7 @@
 
         .txtcenter {
             margin-top: 4em;
-            font-size: .9em;
+            font-size: 0.9em;
             text-align: center;
             color: #aaa;
         }
@@ -474,9 +422,8 @@
 
         .copy a {
             text-decoration: none;
-            color: #1ABC9C;
+            color: #1abc9c;
         }
-
 
         .button1 {
             border-radius: 10px;
@@ -537,11 +484,94 @@
             height: 100px;
         }
 
+        /** BACKGROUND **/
+        .circle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgb(35, 68, 99);
+            animation: ripple 15s infinite;
+            box-shadow: 0px 0px 1px 0px #508fb9;
+        }
 
+        .small {
+            width: 200px;
+            height: 200px;
+            right: -100px;
+            bottom: -100px;
+        }
+
+        .medium {
+            width: 400px;
+            height: 400px;
+            right: -200px;
+            bottom: -200px;
+        }
+
+        .large {
+            width: 600px;
+            height: 600px;
+            right: -300px;
+            bottom: -300px;
+        }
+
+        .xlarge {
+            width: 800px;
+            height: 800px;
+            right: -400px;
+            bottom: -400px;
+        }
+
+        .xxlarge {
+            width: 1000px;
+            height: 1000px;
+            right: -500px;
+            bottom: -500px;
+        }
+
+        .shade1 {
+            opacity: 0.2;
+        }
+
+        .shade2 {
+            opacity: 0.5;
+        }
+
+        .shade3 {
+            opacity: 0.7;
+        }
+
+        .shade4 {
+            opacity: 0.8;
+        }
+
+        .shade5 {
+            opacity: 0.9;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0.8);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(0.8);
+            }
+        }
     </style>
-
 </head>
 <body style="overflow-y: scroll">
+<div class="ripple-background">
+    <div class="circle xxlarge shade1"></div>
+    <div class="circle xlarge shade2"></div>
+    <div class="circle large shade3"></div>
+    <div class="circle mediun shade4"></div>
+    <div class="circle small shade5"></div>
+</div>
+
 <input type="checkbox" id="menu"/>
 <label for="menu" class="menu">
     <span></span>
@@ -557,64 +587,63 @@
     </ul>
 </nav>
 <section>
-
     <main>
         <div class="question">
-            <h3>Round {{ round.number }}</h3>
-            <h6 style="text-align: center">Problem Statement</h6>
+            <h3>Round {{ round.roundNumber }}</h3>
+            <h2 style="text-align: center; margin: 0px">Problem Statement</h2>
+            <h1 style="margin: 5px">{{ question.title }}</h1>
             <p>
-                Lorem ipsum elit. Alias doloribus accusamus vero quas nulla
-                veritatis blanditiis inventore debitis. Veniam suscipit magni rerum
-                officiis aspernatur corporis consequatur, odio sunt ea incidunt
-                dolorum aliquam laborum laudantium omnis autem tempore eius quasi
-                saepe molestiae magnam deleniti repellendus placeat vero. Vel quis
-                omnis nobis.
+                {{ question.description }}
             </p>
             <h6>Test - Input</h6>
-            <p>
-                10 20 30 40 50 60
-            </p>
+            <h6 style="background-color: grey; border-radius: 10px; padding: 8px; font-size: 20px; margin: 0px; letter-spacing: 2px">{{ question.test_input }}</h6>
             <h6>Sample - Output</h6>
-            <p>
-                10 20 30 40 50 60
-            </p>
+            <h6 style="background-color: grey; border-radius: 10px; padding: 8px; font-size: 20px; margin: 0px">{{ question.test_output }}</h6>
+            <h2>{{ question.points }} coins</h2>
         </div>
         <div class="bar">
             <form method="post">
                 {% csrf_token %}
                 <p class="file-return"></p>
                 <div class="input-file-container">
-                    <input class="input-file" id="my-file" type="file" accept=".cpp,.c">
-                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                    <input
+                            class="input-file"
+                            id="my-file"
+                            type="file"
+                            accept=".cpp,.c"
+                    />
+                    <label tabindex="0" for="my-file" class="input-file-trigger"
+                    >Select a file...</label
+                    >
 
                     <svg width="0" height="0">
                         <filter id="filter">
                             <feTurbulence
                                     type="fractalNoise"
                                     baseFrequency=".01"
-                                    numOctaves="6"></feTurbulence>
-                            <feDisplacementMap in="SourceGraphic" scale="100"></feDisplacementMap>
+                                    numOctaves="6"
+                            ></feTurbulence>
+                            <feDisplacementMap
+                                    in="SourceGraphic"
+                                    scale="100"
+                            ></feDisplacementMap>
                         </filter>
                     </svg>
                     <button class="button1 _1" type="submit">
                         <span>Submit</span>
-                        <div class="back">
-                        </div>
-
+                        <div class="back"></div>
                     </button>
                 </div>
             </form>
         </div>
-
     </main>
 </section>
 <script>
-
     function submitForm(event) {
         document.querySelector("form").submit();
     }
 
-    document.querySelector("html").classList.add('js');
+    document.querySelector("html").classList.add("js");
 
     var fileInput = document.querySelector(".input-file"),
         button = document.querySelector(".input-file-trigger"),
@@ -630,10 +659,10 @@
         return false;
     });
     fileInput.addEventListener("change", function (event) {
-        the_return.innerHTML = this.value.split(`\\`)[this.value.split(`\\`).length - 1];
+        the_return.innerHTML = this.value.split(`\\`)[
+        this.value.split(`\\`).length - 1
+            ];
     });
-
-
 </script>
 </body>
 </html>
