@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Max
 from models.models import *
-from models.models import Contest, Team, PlayerTeam, Components, Submission, TeamComponents
+from models.models import Contest, Team, PlayerTeam, Components, Submission, TeamComponents, TradeTicket, \
+    TicketComponents
 from datetime import datetime, timedelta
 from django.contrib import messages
 
@@ -139,7 +140,7 @@ def confirmComponentsSale(request):
         messages.success(request, "Components Bought Successfully.")
         del request.session['coins']
         del request.session['components']
-        return HttpResponseRedirect(reverse_lazy('register'))
+        return HttpResponseRedirect(reverse_lazy('inventory'))
 
 
 def developers(request):
@@ -275,13 +276,6 @@ def round_screen(request):
 
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0 and datetime.now() > date:
         return render(request, template_name="started.html")
-
-    if len(Contest.objects.all()) == 0:
-        return HttpResponseRedirect(reverse_lazy('home'))
-    contest = Contest.objects.all()[0]
-    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
-                    minute=contest.start_time.minute, hour=contest.start_time.hour)
-
     if date > datetime.now():
         return render(request, "NotStarted.html")
 
@@ -300,13 +294,6 @@ def question_screen(request, id):
 
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0 and datetime.now() > date:
         return render(request, template_name="started.html")
-
-    if len(Contest.objects.all()) == 0:
-        return HttpResponseRedirect(reverse_lazy('home'))
-    contest = Contest.objects.all()[0]
-    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
-                    minute=contest.start_time.minute, hour=contest.start_time.hour)
-
     if date > datetime.now():
         return render(request, "NotStarted.html")
 
@@ -346,7 +333,7 @@ def question_screen(request, id):
             ).save()
             print("hello")
             return HttpResponseRedirect(reverse_lazy('question_screen', kwargs={'id': str(id)}))
-        except:
+        except Exception as e:
             return render(request, "404.html")
 
 
@@ -361,8 +348,193 @@ def transactionHistory(request):
     if date > datetime.now():
         return render(request, "NotStarted.html")
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
-        return render(request, "")
+        return render(request, "started.html")
     team = PlayerTeam.objects.all().get(player=request.user).team
     transactions = Transaction.objects.all().filter(
-        team=team).order_by('datetime')
+        team=team).order_by('-datetime')
     return render(request, "transactions.html", {"transactions": transactions, "team": team})
+
+
+@login_required
+def inventory(request):
+    if len(Contest.objects.all()) == 0:
+        return HttpResponseRedirect(reverse_lazy('home'))
+    contest = Contest.objects.all()[0]
+    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                    minute=contest.start_time.minute, hour=contest.start_time.hour)
+
+    if len(PlayerTeam.objects.all().filter(player=request.user)) == 0 and datetime.now() > date:
+        return render(request, template_name="started.html")
+    if date > datetime.now():
+        return render(request, "NotStarted.html")
+
+    inventoryItems = TeamComponents.objects.all().filter(team=PlayerTeam.objects.get(player=request.user).team)
+    return render(request, "Inventory.html", {"items": inventoryItems})
+
+
+@login_required
+def tradeCodeScreen(request):
+    if len(Contest.objects.all()) == 0:
+        return HttpResponseRedirect(reverse_lazy('home'))
+    contest = Contest.objects.all()[0]
+    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                    minute=contest.start_time.minute, hour=contest.start_time.hour)
+
+    if date > datetime.now():
+        return render(request, "NotStarted.html")
+    if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
+        return render(request, "started.html")
+
+    if request.method == "GET":
+        return render(request, "tradeCodeScreen.html")
+    if request.method == "POST":
+        data = request.POST
+        code = request.POST['code']
+        return HttpResponseRedirect(reverse_lazy('trade-confirmation', kwargs={'code': str(code).strip()}))
+
+
+@login_required
+def tradeConfirmScreen(request, code):
+    if len(Contest.objects.all()) == 0:
+        return HttpResponseRedirect(reverse_lazy('home'))
+    contest = Contest.objects.all()[0]
+    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                    minute=contest.start_time.minute, hour=contest.start_time.hour)
+
+    if date > datetime.now():
+        return render(request, "NotStarted.html")
+    if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
+        return render(request, "started.html")
+
+    if len(TradeTicket.objects.all().filter(code__exact=code, contest=contest)) == 0:
+        messages.error(request, "Invalid code. Please try again with valid code.")
+        return HttpResponseRedirect(reverse_lazy('trade-code'))
+    tradeTicket = TradeTicket.objects.all().get(code__exact=code, contest=contest)
+    if tradeTicket.availed == True:
+        messages.error(request, "Code already availed. Better luck next time.")
+        return HttpResponseRedirect(reverse_lazy('trade-code'))
+
+    if tradeTicket.team == PlayerTeam.objects.all().get(player=request.user).team:
+        messages.error(request, "You cannot use your own Trade code.")
+        return HttpResponseRedirect(reverse_lazy('trade-code'))
+
+    if tradeTicket.cost > PlayerTeam.objects.all().get(player=request.user).team.coins:
+        messages.error(request, "You do not have enough coins to proceed.")
+        return HttpResponseRedirect(reverse_lazy('trade-code'))
+    components = TicketComponents.objects.all().filter(ticket=tradeTicket)
+    if request.method == "GET":
+        count = 0
+        for component in components:
+            count += component.quantity
+        return render(request, "tradeDetailScreen.html",
+                      {"ticket": tradeTicket, "components": components, "count": count})
+    else:
+        for component in components:
+            if component.quantity > TeamComponents.objects.get(component=component.component,
+                                                               team=tradeTicket.team).quantity:
+                messages.error(request, "Sorry, other team used it components. Cannot proceed with transaction.")
+                return HttpResponseRedirect(reverse_lazy('trade-code'))
+        userTeam = PlayerTeam.objects.get(player=request.user).team
+        for component in components:
+            comp = TeamComponents.objects.get(component=component.component, team=tradeTicket.team)
+            comp.quantity = comp.quantity - component.quantity
+            userComp, b = TeamComponents.objects.get_or_create(component=component.component,
+                                                               team=userTeam)
+            userComp.quantity += component.quantity
+
+            comp.save()
+            userComp.save()
+
+        team = tradeTicket.team
+        Transaction.objects.create(
+            message="Sold components to team " + userTeam.teamName,
+            balance=team.coins + tradeTicket.cost,
+            previousBalance=team.coins,
+            mode='Credit',
+            datetime=datetime.now(),
+            team=team,
+            changeAmount=tradeTicket.cost
+        ).save()
+        Transaction.objects.create(
+            message="Bought components from team " + team.teamName,
+            balance=userTeam.coins - tradeTicket.cost,
+            previousBalance=userTeam.coins,
+            mode='Debit',
+            datetime=datetime.now(),
+            team=userTeam,
+            changeAmount=tradeTicket.cost
+        ).save()
+        team.coins += tradeTicket.cost
+        userTeam.coins -= tradeTicket.cost
+        team.save()
+        userTeam.save()
+        messages.success(request, "Transaction successful.")
+        return HttpResponseRedirect(reverse_lazy('inventory'))
+
+
+@login_required
+def tradePortal(request):
+    if len(Contest.objects.all()) == 0:
+        return HttpResponseRedirect(reverse_lazy('home'))
+    contest = Contest.objects.all()[0]
+    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                    minute=contest.start_time.minute, hour=contest.start_time.hour)
+
+    if date > datetime.now():
+        return render(request, "NotStarted.html")
+    if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
+        return render(request, "started.html")
+    tickets = TradeTicket.objects.all().filter(availed=False, showOnWall=True, contest=contest)
+
+    return render(request, "tradePortal.html", {"tickets": tickets})
+
+
+@login_required
+def generateCode(request):
+    if len(Contest.objects.all()) == 0:
+        return HttpResponseRedirect(reverse_lazy('home'))
+    contest = Contest.objects.all()[0]
+    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                    minute=contest.start_time.minute, hour=contest.start_time.hour)
+
+    if date > datetime.now():
+        return render(request, "NotStarted.html")
+    if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
+        return render(request, "started.html")
+    if request.method == "GET":
+        components = TeamComponents.objects.all().filter(team=PlayerTeam.objects.get(player=request.user).team)
+        return render(request, "generateTradeCode.html", {"components": components})
+    else:
+        data = request.POST
+        keys = list(data)
+        cost = int(data['cost'])
+        keys.remove('csrfmiddlewaretoken')
+        keys.remove('cost')
+        quantity = 0
+        team = PlayerTeam.objects.get(player=request.user).team
+        for key in keys:
+            count = int(data[key])
+            quantity += count
+            if count > TeamComponents.objects.all().get(team=team, component__id=key).quantity:
+                messages.error(request, "Your component count have updated. Please try again.")
+                return HttpResponseRedirect(reverse_lazy('generate-code'))
+
+        if quantity == 0:
+            messages.error(request, "Please select components to continue.")
+            return HttpResponseRedirect(reverse_lazy('generate-code'))
+
+        ticket = TradeTicket.objects.create(
+            contest=Contest.objects.all()[0],
+            team=team,
+            cost=cost,
+            code=str(uuid.uuid1()).replace("-", "")[:10].upper()
+        )
+        ticket.save()
+        for key in keys:
+            if int(data[key]) != 0:
+                TicketComponents.objects.create(ticket=ticket,
+                                                component=TeamComponents.objects.all().get(team=team,
+                                                                                           component__id=key).component,
+                                                quantity=int(data[key])).save()
+        messages.success(request, "Ticket generated successfully. Code : " + ticket.code)
+        return HttpResponseRedirect(reverse_lazy('generate-code'))

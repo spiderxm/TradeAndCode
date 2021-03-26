@@ -11,7 +11,7 @@ class Contest(models.Model):
     """
     Model used for Coding Competitions
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     description = models.TextField(max_length=4000)
     rounds = models.PositiveSmallIntegerField()
     date = models.DateField()
@@ -66,7 +66,7 @@ class Team(models.Model):
     """
     Model for team
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     teamCode = models.CharField(max_length=256, null=False)
     createdBy = models.ForeignKey(User, on_delete=models.CASCADE)
     teamName = models.CharField(unique=True, max_length=256)
@@ -81,7 +81,7 @@ class PlayerTeam(models.Model):
     """
     Model to store team for user for a contest
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
@@ -94,7 +94,7 @@ class Submission(models.Model):
     """
     Model for group submissions of Coding Questions
     """
-    id = models.CharField(max_length=256, default=uuid.uuid4(), primary_key=True)
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     roundId = models.ForeignKey("Round", on_delete=models.CASCADE)
     teamCode = models.ForeignKey("Team", on_delete=models.PROTECT)
     languageUsed = models.CharField(max_length=256, null=False)
@@ -124,4 +124,26 @@ class TeamComponents(models.Model):
     """
     component = models.ForeignKey(Components, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+
+
+class TradeTicket(models.Model):
+    """
+    Model to store Trade ticket details
+    """
+    id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    availed = models.BooleanField(default=False)
+    showOnWall = models.BooleanField(default=False)
+    code = models.CharField(max_length=256)
+    cost = models.BigIntegerField()
+
+
+class TicketComponents(models.Model):
+    """
+    Model to store Trade Ticket Components
+    """
+    ticket = models.ForeignKey(TradeTicket, on_delete=models.CASCADE)
+    component = models.ForeignKey(Components, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)

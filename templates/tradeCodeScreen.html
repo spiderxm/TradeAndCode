@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Enter Code</title>
+    <link
+            rel="icon"
+            href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png"
+    />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+        }
+
+        section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        .container {
+            margin: 5%;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container h1 {
+            color: #fff;
+            font-size: 2.5em;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin: 30px 0;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        @import url("https://rsms.me/inter/inter.css");
+        :root {
+            --color-background: var(--color-light);
+            --color-text: var(--color-dark);
+            --color-accent: var(--color-signal);
+            --size-bezel: 0.5rem;
+            --size-radius: 4px;
+            line-height: 1.4;
+            font-family: "Inter", sans-serif;
+            font-size: calc(0.6rem + 0.4vw);
+        }
+
+        form h2 {
+            font-weight: 400;
+        }
+
+        .card {
+            width: 600px;
+            background: #000;
+            padding: calc(4 * var(--size-bezel));
+            margin-top: calc(4 * var(--size-bezel));
+            border-radius: var(--size-radius);
+            border: 1px solid var(--color-shadow, cyan);
+            box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, rgba(40, 196, 196, 0.651));
+        }
+
+        .input {
+            position: relative;
+        }
+
+        .input__label {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * 0.5);
+            margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * 0.5);
+            white-space: nowrap;
+            transform: translate(0, 0);
+            transform-origin: 0 0;
+            background: #000;
+            transition: transform 120ms ease-in;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .input__field {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            border: 2px solid currentColor;
+            padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+            color: #fff;
+            background: transparent;
+            border-radius: var(--size-radius);
+        }
+
+        .input__field:not(:-moz-placeholder-shown) + .input__label {
+            transform: translate(0.25rem, -65%) scale(0.8);
+            color: cyan;
+        }
+
+        .input__field:not(:-ms-input-placeholder) + .input__label {
+            transform: translate(0.25rem, -65%) scale(0.8);
+            color: cyan;
+        }
+
+        .input__field:focus + .input__label,
+        .input__field:not(:placeholder-shown) + .input__label {
+            transform: translate(0.25rem, -65%) scale(0.8);
+            color: cyan;
+        }
+
+        .button-group {
+            margin-top: 30px;
+        }
+
+        button {
+            color: #fff;
+            padding: 8px 12px;
+            background: rgb(87, 86, 86);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        button:hover {
+            box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
+            background-color: #00c8ecb2;
+            -webkit-transition: all 0.2s ease-out;
+            -moz-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+        }
+
+        button:focus {
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="container">
+        <h1>Trade Portal</h1>
+        <div style="text-align: center; margin-top: 10px">
+            {% if messages %} {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    <h5
+                            style="
+                text-transform: uppercase;
+                font-size: 20px;
+                letter-spacing: 3px;
+                font-family: monospace;
+                color: rgb(206, 20, 20);
+              "
+                    >
+                        {{ message }}
+                    </h5>
+                </div>
+            {% endfor %} {% endif %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <h2>Enter Transaction Code Sent to you</h2>
+                <br/>
+                <label class="input">
+                    <input class="input__field" type="text" placeholder="" required name="code"/>
+                    <span class="input__label">Transaction Code</span>
+                </label>
+                <div class="button-group">
+                    <button type="submit">Proceed</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
