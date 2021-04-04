@@ -19,4 +19,5 @@ urlpatterns = [
     path('trade-portal/', tradePortal, name="trade-portal"),
     path('generate-code/', generateCode, name="generate-code"),
     path('trade-confirmation/<str:code>/', tradeConfirmScreen, name="trade-confirmation"),
+    path('round/<str:id>/submission/', submission, name="submission_screen")
 ]

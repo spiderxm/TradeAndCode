@@ -20,7 +20,9 @@ class ContestFormForEdit(forms.ModelForm):
         exclude = ['id', 'rounds']
         widgets = {
             'date': DateInput(attrs={'type': 'date'}),
-            'start_time': TimeInput(attrs={'type': 'time'})
+            'start_time': TimeInput(attrs={'type': 'time'}),
+            'end_time': TimeInput(attrs={'type': 'time'})
+
         }
 
 
@@ -34,7 +36,9 @@ class ContestForm(forms.ModelForm):
         exclude = ['id']
         widgets = {
             'date': DateInput(attrs={'type': 'date'}),
-            'start_time': TimeInput(attrs={'type': 'time'})
+            'start_time': TimeInput(attrs={'type': 'time'}),
+            'end_time': TimeInput(attrs={'type': 'time'})
+
         }
 
 
@@ -68,7 +72,7 @@ class RoundForm(forms.ModelForm):
         exclude = ['id', 'roundNumber', 'contestId']
 
         widgets = {
-            'startTime': TimeInput(attrs={'type': 'time'})
+            'startTime': TimeInput(attrs={'type': 'time'}),
         }
 
 

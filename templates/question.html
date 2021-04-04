@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Round {{ round.roundNumber }}</title>
     <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
-
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
@@ -21,7 +20,7 @@
         html {
             font-family: Arial;
             font-size: 16px;
-            background: #01011d;
+            background: rgb(21, 73, 73);
         }
 
         body {
@@ -30,8 +29,8 @@
             padding: 0;
             font-weight: 300;
             line-height: 1.75;
-            color: #444;
-            overflow: hidden;
+            overflow-y: scroll;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -55,7 +54,7 @@
             flex-direction: column;
             width: 50px;
             height: 50px;
-            background-color: rgb(12, 206, 206);
+            background-color: rgb(47, 170, 170);
             border-radius: 50%;
             -webkit-transition: -webkit-transform 250ms ease;
             transition: -webkit-transform 250ms ease;
@@ -150,7 +149,7 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #040425;
+            background-color: #1c7a73;
             font-size: 0.8em;
             -webkit-transition: left 500ms ease;
             transition: left 500ms ease;
@@ -208,26 +207,37 @@
                     linear,
                     left top,
                     right top,
-                    from(#5e42a6),
-                    to(#b74e91)
+                    from(#01d5f1),
+                    to(#057ca0)
             );
-            background-image: linear-gradient(to right, #5e42a6, #b74e91);
+            background-image: linear-gradient(to right, from(#01d5f1), to(#057ca0));
         }
 
         section {
             transition: ease-in-out 0.5s;
             width: 80%;
             margin: 0 auto;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         main {
             position: relative;
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: 80%;
             max-height: 10%;
-            padding: 60px 60px;
+            padding: 80px 60px;
             z-index: 0;
+            margin: 0 auto;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            box-shadow: inset 5px 5px 5px #0000006b, inset -5px -5px 15px #00eeff7f,
+            5px 5px 5px #0000006b, -5px -5px 15px #00eeff7f;
+            border-radius: 10px;
         }
 
         ::-webkit-scrollbar {
@@ -235,62 +245,40 @@
         }
 
         .question {
-            width: 80%;
-            margin: 0 auto;
-            padding: 30px;
             font-size: 1.5em;
             color: #fff;
             overflow-y: scroll;
-            border: 1px solid #fff;
             border-radius: 10px;
+            padding: 30px;
         }
 
-        .bar {
+        .btn-container {
+            width: 90%;
+            position: absolute;
+            bottom: 10px;
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: 80%;
+            justify-content: flex-end;
             margin: 0 auto;
-            margin-top: 50px;
+            padding: 10 30px;
         }
 
-        .bar .upload {
-            color: grey;
-            border: 1px dashed grey;
-            padding: 6.5px 60px;
-            width: 75%;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
+        .btn {
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background: transparent;
+            outline: none;
+            border: none;
+            color: #fff;
             text-transform: uppercase;
-            display: flex;
-            flex-direction: row;
-            margin-right: 10px;
+            letter-spacing: 0.1em;
+            border-radius: 10px;
+            transition: 0.5s;
         }
 
-        /* .bar .onHover {
-          color: #fff;
-          border: 1px dotted #fff;
-        }
-
-        .bar .valid {
-          color: cyan;
-          border: 1px solid cyan;
-        }
-
-        .bar .invalid {
-          color: red;
-          border: 1px dashed red;
-        } */
-
-        .form {
-            width: 500px;
-        }
-
-        @media (max-width: 600px) {
-            .form {
-                width: 80%;
-            }
+        .btn:hover {
+            background: #00e5ed93;
         }
 
         @media screen and (max-width: 1024px) {
@@ -315,264 +303,231 @@
                 font-size: 1.25em;
                 margin-top: 40px;
             }
-
-            section main .bar {
-                display: flex;
-                flex-direction: column;
-            }
-
-            section main .bar .upload {
-                border-radius: 10px;
-                width: 100%;
-                margin-bottom: 30px;
-            }
         }
 
-        .input-file-container {
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+        .menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .menu span {
             position: relative;
-            width: 250px;
-        }
-
-        .js .input-file-trigger {
             display: block;
-            padding: 14px 45px;
-            border: 1px solid #00c7ec;
-            color: #00c7ec;
-            font-size: 1em;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: all 0.4s;
-            cursor: pointer;
-            transition: all 0.2s ease-in;
+            width: 50%;
+            height: 2px;
+            background-color: black;
+            float: left;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+            z-index: 200;
         }
 
-        .js .input-file {
-            position: absolute;
+        .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+        }
+
+        .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(5px);
+            transform: translateY(5px);
+        }
+
+        #menu {
+            display: none;
+        }
+
+        #menu:checked ~ .menu {
+            background-color: transparent;
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span {
+            background-color: white;
+            -webkit-transition: -webkit-transform 250ms ease;
+            transition: -webkit-transform 250ms ease;
+            transition: transform 250ms ease;
+            transition: transform 250ms ease, -webkit-transform 250ms ease;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(1) {
+            -webkit-transform: translateY(1px) rotate(45deg);
+            transform: translateY(1px) rotate(45deg);
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(2) {
+            display: none;
+        }
+
+        #menu:checked ~ .menu span:nth-of-type(3) {
+            -webkit-transform: translateY(-1px) rotate(-45deg);
+            transform: translateY(-1px) rotate(-45deg);
+        }
+
+        #menu:checked ~ .nav {
+            left: 0px;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+        }
+
+        #menu:checked ~ main {
+            -webkit-transform: translateX(250px);
+            transform: translateX(250px);
+            -webkit-transition: -webkit-transform 500ms ease;
+            transition: -webkit-transform 500ms ease;
+            transition: transform 500ms ease;
+            transition: transform 500ms ease, -webkit-transform 500ms ease;
+        }
+
+        .nav {
+            position: fixed;
             top: 0;
-            left: 0;
-            width: 250px;
-            opacity: 0;
-            padding: 14px 0;
-            cursor: pointer;
-            border-radius: 20px;
-        }
-
-        .js .input-file:hover + .input-file-trigger,
-        .js .input-file:focus + .input-file-trigger,
-        .js .input-file-trigger:hover,
-        .js .input-file-trigger:focus {
-            color: white;
-            box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-            background-color: #00c8ecb2;
-            -webkit-transition: all 0.2s ease-out;
-            -moz-transition: all 0.2s ease-out;
-            transition: all 0.2s ease-out;
-            border-radius: 40px;
-        }
-
-        .file-return {
+            left: -310px;
+            width: 300px;
+            height: 100vh;
             margin: 0;
+            padding: 0;
+            background-color: rgb(13, 164, 175);
+            font-size: 0.8em;
+            -webkit-transition: left 500ms ease;
+            transition: left 500ms ease;
+            z-index: 2;
         }
 
-        .file-return:not(:empty) {
+        .nav ul {
+            position: relative;
+            list-style-type: none;
+            margin: 150px 0;
+            margin-bottom: 30px;
+            padding: 0;
+        }
+
+        .nav ul li {
+            position: relative;
+            display: block;
+            position: relative;
             margin: 1em 0;
         }
 
-        .js .file-return {
-            font-style: italic;
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-
-        .js .file-return:not(:empty):before {
-            content: "Selected file: ";
-            font-style: normal;
-            font-weight: normal;
-        }
-
-        h1,
-        h2 {
-            font-weight: normal;
-            text-align: center;
-            color: #aaa;
-        }
-
-        h2 {
-            color: #1abc9c;
-        }
-
-        form {
-            width: 225px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        h2 + P {
-            text-align: center;
-        }
-
-        .txtcenter {
-            margin-top: 4em;
-            font-size: 0.9em;
-            text-align: center;
-            color: #aaa;
-        }
-
-        .copy {
-            margin-top: 2em;
-        }
-
-        .copy a {
-            text-decoration: none;
-            color: #1abc9c;
-        }
-
-        .button1 {
-            border-radius: 10px;
-            border: 0;
+        .nav ul li a {
             position: relative;
-            width: 200px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            overflow: hidden;
-            margin: 0 0.8rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 3px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s cubic-bezier(0, 0.22, 0.3, 1);
-        }
-
-        .button1::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .button1 span {
-            color: #fff;
-            font-size: 1rem;
-            z-index: 10;
+            display: block;
+            margin: 0;
+            padding: 15px 20px;
+            color: white;
+            line-height: 4em;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            text-decoration: none;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.35);
         }
 
-        ._1 {
-            background: grey;
+        @media screen and (max-width: 1024px) {
+            footer {
+                font-size: 14px;
+            }
+
+            .social {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .social ul li {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                width: 40px;
+            }
         }
 
-        .button1 .back {
-            position: absolute;
-            width: 0;
-            height: 0;
-            filter: url(#filter);
-            border-radius: 50%;
-            z-index: 5;
-            transition: all 2.5s cubic-bezier(0.1, 0.22, 0.3, 1);
+        .logout-button {
+            background-color: transparent;
+            border: none;
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 15px 20px;
+            line-height: 4em;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.4em;
+            color: rgba(255, 255, 255, 0.35);
         }
 
-        ._1 .back {
-            left: -50%;
-            top: -50%;
-            background: #07c6e7;
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 0.75);
         }
 
-        .button1:hover .back {
-            width: 400px;
-            height: 100px;
+        .nav ul li.active a and .nav ul li.active button {
+            color: white;
         }
 
-        /** BACKGROUND **/
-        .circle {
-            position: fixed;
-            border-radius: 50%;
-            background: rgb(35, 68, 99);
-            animation: ripple 15s infinite;
-            box-shadow: 0px 0px 1px 0px #508fb9;
-        }
-
-        .small {
-            width: 200px;
-            height: 200px;
-            right: -100px;
-            bottom: -100px;
-        }
-
-        .medium {
-            width: 400px;
-            height: 400px;
-            right: -200px;
-            bottom: -200px;
-        }
-
-        .large {
-            width: 600px;
-            height: 600px;
-            right: -300px;
-            bottom: -300px;
-        }
-
-        .xlarge {
-            width: 800px;
-            height: 800px;
-            right: -400px;
-            bottom: -400px;
-        }
-
-        .xxlarge {
-            width: 1000px;
-            height: 1000px;
-            right: -500px;
-            bottom: -500px;
-        }
-
-        .shade1 {
+        .nav ul li:not(.active)::after {
             opacity: 0.2;
         }
 
-        .shade2 {
-            opacity: 0.5;
+        .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 0.75);
         }
 
-        .shade3 {
-            opacity: 0.7;
-        }
-
-        .shade4 {
-            opacity: 0.8;
-        }
-
-        .shade5 {
-            opacity: 0.9;
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0.8);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(0.8);
-            }
+        .nav ul li::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 0.2em;
+            background: black;
+            left: 0;
+            bottom: 0;
+            background-image: -webkit-gradient(
+                    linear,
+                    left top,
+                    right top,
+                    from(grey),
+                    to(black)
+            );
+            background-image: linear-gradient(to right, grey, black);
         }
     </style>
 </head>
-<body style="overflow-y: scroll">
-<div class="ripple-background">
-    <div class="circle xxlarge shade1"></div>
-    <div class="circle xlarge shade2"></div>
-    <div class="circle large shade3"></div>
-    <div class="circle mediun shade4"></div>
-    <div class="circle small shade5"></div>
-</div>
+<body>
 
 <input type="checkbox" id="menu"/>
 <label for="menu" class="menu">
@@ -580,96 +535,78 @@
     <span></span>
     <span></span>
 </label>
-<nav class="nav">
+<nav class="nav" style="overflow-y: scroll">
     <ul>
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Market</a></li>
-        <li><a href="#">Trade portal</a></li>
-        <li><a href="#">Transactions</a></li>
+        <img style="margin-left: 10%; margin-top: -35%; margin-bottom: -10%" width="80%"
+             src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"/>
+
+        {% if user.is_authenticated == False %}
+            <li class="#"><a href="accounts/login">Login</a></li>
+        {% endif %}
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'register' %}">Team</a></li>
+        <li><a href="{% url 'market' %}">Market</a></li>
+        <li><a href="{% url 'rounds' %}">Rounds</a></li>
+        <li><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
+        <li><a href="{% url 'inventory' %}">Inventory</a></li>
+        <li><a href="{% url 'trade-portal' %}">Trade portal</a></li>
+        <li><a href="{% url 'transactions' %}">Transactions</a></li>
+        <li><a href="{% url 'developers' %}">Developers</a></li>
+        {% if user.is_authenticated == True %}
+            <form name="myForm" id="logout-form" method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <li class="">
+                    <button type="submit" class="logout-button">
+                        Sign out
+                    </button>
+                </li>
+            </form>
+        {% endif %}
+        <li>
+            <a href="https://web.whatsapp.com/send?text=Come and play Trade and Code Organised by Team .exe NIT Hamirpur on {{ request.build_absolute_uri }}"
+               data-action="share/whatsapp/share" target="_blank" style="text-decoration: none">Share via Whatsapp</a>
+        </li>
+
     </ul>
 </nav>
 <section>
     <main>
         <div class="question">
             <h3>Round {{ round.roundNumber }}</h3>
-            <h2 style="text-align: center; margin: 0px">Problem Statement</h2>
-            <h1 style="margin: 5px">{{ question.title }}</h1>
+            <h3 style="text-align: center">{{ question.title }}</h3>
             <p>
                 {{ question.description }}
             </p>
-            <h6>Test - Input</h6>
-            <h6 style="background-color: grey; border-radius: 10px; padding: 8px; font-size: 20px; margin: 0px; letter-spacing: 2px">{{ question.test_input }}</h6>
-            <h6>Sample - Output</h6>
-            <h6 style="background-color: grey; border-radius: 10px; padding: 8px; font-size: 20px; margin: 0px">{{ question.test_output }}</h6>
-            <h2>{{ question.points }} coins</h2>
+            <div
+                    class="highlight"
+                    style="
+              padding: 5px 0;
+              padding-left: 50px;
+              background: rgba(0, 0, 0, 0.253);
+            "
+            >
+                <h6>Test - Input</h6>
+                <p>{{ question.input }}</p>
+                <h6>Sample - Output</h6>
+                <p>{{ question.output }}</p>
+            </div>
         </div>
-        <div class="bar">
-            {% if submission is False %}
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <p class="file-return"></p>
-                    <div class="input-file-container">
-                        <input
-                                class="input-file"
-                                id="my-file"
-                                type="file"
-                                accept=".cpp,.c"
-                                name="submission"
-                        />
-                        <label tabindex="0" for="my-file" class="input-file-trigger"
-                        >Select a file...</label
-                        >
+        {% if submission is False %}
+            <a href="{% url 'submission_screen' round.id %}">
+                <div class="btn-container">
+                    <button class="btn">< Proceed for Submission ></button>
+                </div>
+            </a>
+        {% else %}
+            <div class="btn-container">
+                <button class="btn">< Submission Done ></button>
+            </div>
+        {% endif %}
 
-                        <svg width="0" height="0">
-                            <filter id="filter">
-                                <feTurbulence
-                                        type="fractalNoise"
-                                        baseFrequency=".01"
-                                        numOctaves="6"
-                                ></feTurbulence>
-                                <feDisplacementMap
-                                        in="SourceGraphic"
-                                        scale="100"
-                                ></feDisplacementMap>
-                            </filter>
-                        </svg>
-                        <button class="button1 _1" type="submit">
-                            <span>Submit</span>
-                            <div class="back"></div>
-                        </button>
-                    </div>
-                </form>
-            {% else %}
-                <h1>Submission Done</h1>
-            {% endif %}
-        </div>
     </main>
 </section>
-<script>
-    function submitForm(event) {
-        document.querySelector("form").submit();
-    }
-
-    document.querySelector("html").classList.add("js");
-
-    var fileInput = document.querySelector(".input-file"),
-        button = document.querySelector(".input-file-trigger"),
-        the_return = document.querySelector(".file-return");
-
-    button.addEventListener("keydown", function (event) {
-        if (event.keyCode == 13 || event.keyCode == 32) {
-            fileInput.focus();
-        }
-    });
-    button.addEventListener("click", function (event) {
-        fileInput.focus();
-        return false;
-    });
-    fileInput.addEventListener("change", function (event) {
-        the_return.innerHTML = this.value.split(`\\`)[
-        this.value.split(`\\`).length - 1
-            ];
-    });
-</script>
 </body>
 </html>

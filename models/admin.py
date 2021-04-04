@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import Contest, Round, Question, Team, Submission, Components, PlayerTeam, Transaction, TicketComponents, \
-    TradeTicket, TeamComponents
+    TradeTicket, TeamComponents, SubmissionComponents
 
 admin.site.register([
     Contest,
@@ -15,5 +15,6 @@ admin.site.register([
     Transaction,
     TradeTicket,
     TicketComponents,
-    TeamComponents
+    TeamComponents,
+    SubmissionComponents
 ])

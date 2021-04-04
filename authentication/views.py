@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.db.models import Max
 from models.models import *
 from models.models import Contest, Team, PlayerTeam, Components, Submission, TeamComponents, TradeTicket, \
-    TicketComponents
+    TicketComponents, SubmissionComponents
 from datetime import datetime, timedelta
 from django.contrib import messages
 
@@ -44,6 +44,10 @@ def components_screen(request):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
 
     if date > datetime.now():
         return render(request, "NotStarted.html")
@@ -80,6 +84,10 @@ def confirmComponentsSale(request):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
 
     if date > datetime.now():
         return render(request, "NotStarted.html")
@@ -273,6 +281,10 @@ def round_screen(request):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
 
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0 and datetime.now() > date:
         return render(request, template_name="started.html")
@@ -291,50 +303,37 @@ def question_screen(request, id):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
-
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0 and datetime.now() > date:
         return render(request, template_name="started.html")
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
     if date > datetime.now():
         return render(request, "NotStarted.html")
 
-    if request.method == "GET":
-        try:
-            question = Question.objects.all().get(roundId=id)
-            round = Round.objects.all().get(id=id)
-            date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
-                            minute=round.startTime.minute, hour=round.startTime.hour)
+    try:
+        question = Question.objects.all().get(roundId=id)
+        round = Round.objects.all().get(id=id)
+        date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                        minute=round.startTime.minute, hour=round.startTime.hour)
 
-            if date > datetime.now():
-                return render(request, "RoundNotStarted.html", {"round": round, "date": date})
-            date = timedelta(minutes=40) + date
-            if date > datetime.now():
-                if len(Submission.objects.all().filter(teamCode=PlayerTeam.objects.get(player=request.user).team,
-                                                       roundId=round)) == 0:
-                    return render(request, "question.html", {"question": question, "round": round, "submission": False})
-                else:
-                    return render(request, "question.html", {"question": question, "round": round, "submission": True})
+        if date > datetime.now():
+            return render(request, "RoundNotStarted.html", {"round": round, "date": date})
+        date = timedelta(minutes=40) + date
+        if date > datetime.now():
+            if len(Submission.objects.all().filter(teamCode=PlayerTeam.objects.get(player=request.user).team,
+                                                   roundId=round)) == 0:
+                components = TeamComponents.objects.all().filter(
+                    team=PlayerTeam.objects.all().get(player=request.user).team)
+                return render(request, "question.html",
+                              {"question": question, "round": round, "submission": False, "components": components})
+            else:
+                return render(request, "question.html", {"question": question, "round": round, "submission": True})
 
-            return render(request, "RoundEnded.html", {"round": round, "time": date})
-        except:
-            return render(request, "404.html")
-    if request.method == "POST":
-        try:
-            question = Question.objects.all().get(roundId=id)
-            round = Round.objects.all().get(id=id)
-            date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
-                            minute=round.startTime.minute, hour=round.startTime.hour)
-            if date > datetime.now():
-                return render(request, "RoundNotStarted.html", {"round": round, "date": date})
-            date = timedelta(minutes=40) + date
-            Submission.objects.create(
-                teamCode=PlayerTeam.objects.get(player=request.user).team,
-                file=request.FILES['submission'],
-                roundId=round
-            ).save()
-            print("hello")
-            return HttpResponseRedirect(reverse_lazy('question_screen', kwargs={'id': str(id)}))
-        except Exception as e:
-            return render(request, "404.html")
+        return render(request, "RoundEnded.html", {"round": round, "time": date})
+    except:
+        return render(request, "404.html")
 
 
 @login_required
@@ -379,7 +378,10 @@ def tradeCodeScreen(request):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
-
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
     if date > datetime.now():
         return render(request, "NotStarted.html")
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
@@ -400,6 +402,10 @@ def tradeConfirmScreen(request, code):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
 
     if date > datetime.now():
         return render(request, "NotStarted.html")
@@ -479,7 +485,10 @@ def tradePortal(request):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
-
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
     if date > datetime.now():
         return render(request, "NotStarted.html")
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
@@ -496,7 +505,10 @@ def generateCode(request):
     contest = Contest.objects.all()[0]
     date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
                     minute=contest.start_time.minute, hour=contest.start_time.hour)
-
+    endDate = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                       minute=contest.end_time.minute, hour=contest.end_time.hour)
+    if endDate < datetime.now():
+        return render(request, "Ended.html")
     if date > datetime.now():
         return render(request, "NotStarted.html")
     if len(PlayerTeam.objects.all().filter(player=request.user)) == 0:
@@ -538,3 +550,91 @@ def generateCode(request):
                                                 quantity=int(data[key])).save()
         messages.success(request, "Ticket generated successfully. Code : " + ticket.code)
         return HttpResponseRedirect(reverse_lazy('generate-code'))
+
+
+@login_required()
+def submission(request, id):
+    if len(Contest.objects.all()) == 0:
+        return HttpResponseRedirect(reverse_lazy('home'))
+    contest = Contest.objects.all()[0]
+    date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                    minute=contest.start_time.minute, hour=contest.start_time.hour)
+
+    if len(PlayerTeam.objects.all().filter(player=request.user)) == 0 and datetime.now() > date:
+        return render(request, template_name="started.html")
+    if date > datetime.now():
+        return render(request, "NotStarted.html")
+
+    if request.method == "GET":
+        try:
+            question = Question.objects.all().get(roundId=id)
+            round = Round.objects.all().get(id=id)
+            date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                            minute=round.startTime.minute, hour=round.startTime.hour)
+
+            if date > datetime.now():
+                return render(request, "RoundNotStarted.html", {"round": round, "date": date})
+            date = timedelta(minutes=40) + date
+            if date > datetime.now():
+                if len(Submission.objects.all().filter(teamCode=PlayerTeam.objects.get(player=request.user).team,
+                                                       roundId=round)) == 0:
+                    components = TeamComponents.objects.all().filter(
+                        team=PlayerTeam.objects.all().get(player=request.user).team)
+                    return render(request, "submission.html",
+                                  {"question": question, "round": round, "submission": False, "components": components})
+                else:
+                    return HttpResponseRedirect(reverse_lazy('question_screen', kwargs={'id': str(round.id)}))
+
+            return render(request, "RoundEnded.html", {"round": round, "time": date})
+        except:
+            return render(request, "404.html")
+    if request.method == "POST":
+        try:
+            question = Question.objects.get(roundId=id)
+            round = Round.objects.get(id=id)
+            date = datetime(year=contest.date.year, month=contest.date.month, day=contest.date.day,
+                            minute=round.startTime.minute, hour=round.startTime.hour)
+            if date > datetime.now():
+                return render(request, "RoundNotStarted.html", {"round": round, "date": date})
+            date = timedelta(minutes=40) + date
+            if date < datetime.now():
+                return render(request, "RoundEnded.html", {"round": round, "time": date})
+            data = request.POST
+            keys = list(data)
+            keys.remove('csrfmiddlewaretoken')
+            quantity = 0
+            team = PlayerTeam.objects.get(player=request.user).team
+            for key in keys:
+                count = int(data[key])
+                quantity += count
+                if count > TeamComponents.objects.all().get(team=team, component__id=key).quantity:
+                    messages.error(request, "Your component count have updated. Please try again.")
+                    return HttpResponseRedirect(reverse_lazy('submission_screen', kwargs={'id': str(id)}))
+            if quantity == 0:
+                messages.error(request, "You have not selected any component. Please select component to make "
+                                        "submission")
+                return HttpResponseRedirect(reverse_lazy('submission_screen', kwargs={'id': str(id)}))
+            submission = Submission.objects.create(
+                teamCode=PlayerTeam.objects.get(player=request.user).team,
+                file=request.FILES['submission'],
+                roundId=round
+            )
+            submission.save()
+            for key in keys:
+                count = int(data[key])
+                print(key, count)
+                if count > 0:
+                    component = TeamComponents.objects.all().get(team=team, component__id=key)
+                    SubmissionComponents.objects.create(
+                        quantity=count,
+                        component=component.component,
+                        submission=submission
+                    ).save()
+                    component.quantity -= count
+                    component.save()
+            messages.success(request, "Submission Created Successfully.")
+
+            return HttpResponseRedirect(reverse_lazy('rounds'))
+        except Exception as e:
+            print(e)
+            return render(request, "404.html")

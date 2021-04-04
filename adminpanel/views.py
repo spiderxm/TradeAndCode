@@ -1,13 +1,12 @@
-import os
 import uuid
-import requests
-from django.conf import settings
+from datetime import datetime
+
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from .forms import ContestForm, ComponentsForm, RoundForm, QuestionForm, ContestFormForEdit, SubmissionForm, \
     priceUpdateForm
-from models.models import Contest, Round, Question, Components, Submission
+from models.models import Contest, Round, Question, Components, Submission, Transaction
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -52,7 +51,8 @@ class CreateContest(LoginRequiredMixin, PermissionRequiredMixin, View):
                 description=request.POST["description"],
                 date=request.POST["date"],
                 start_time=request.POST["start_time"],
-                money_at_start=request.POST["money_at_start"]
+                money_at_start=request.POST["money_at_start"],
+                end_time=request.POST["end_time"]
             )
             contest.save()
             rounds = contest.rounds
@@ -372,6 +372,19 @@ class CheckSubmission(LoginRequiredMixin, PermissionRequiredMixin, View):
             submission.points = data["points"]
             submission.checkedOrNot = True
             submission.checkedBy = User.objects.all()[0]
+            team = submission.teamCode
+
+            Transaction.objects.create(
+                previousBalance=team.coins,
+                balance=team.coins + int(data["points"]),
+                message=submission.roundId.roundName + " successful marking.",
+                changeAmount=int(data["points"]),
+                mode='Credit',
+                datetime=datetime.now(),
+                team=team
+            ).save()
+            team.coins += int(data["points"])
+            team.save()
             submission.save()
         else:
             context = {
@@ -410,5 +423,3 @@ class UpdateComponentsPrice(LoginRequiredMixin, PermissionRequiredMixin, View):
                 component.componentPrice = int(float(component.componentPrice) / float(data["factor"]))
             component.save()
         return HttpResponseRedirect(reverse_lazy('ContestsList'))
-
-

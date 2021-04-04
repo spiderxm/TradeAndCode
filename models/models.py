@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -16,6 +17,7 @@ class Contest(models.Model):
     rounds = models.PositiveSmallIntegerField()
     date = models.DateField()
     start_time = models.TimeField()
+    end_time = models.TimeField()
     money_at_start = models.PositiveBigIntegerField()
 
     def __str__(self):
@@ -46,6 +48,9 @@ class Round(models.Model):
     roundNumber = models.PositiveSmallIntegerField()
     roundName = models.CharField(max_length=256)
     startTime = models.TimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.roundName
 
 
 class Components(models.Model):
@@ -96,13 +101,16 @@ class Submission(models.Model):
     """
     id = models.CharField(max_length=256, default=uuid.uuid4, primary_key=True)
     roundId = models.ForeignKey("Round", on_delete=models.CASCADE)
-    teamCode = models.ForeignKey("Team", on_delete=models.PROTECT)
+    teamCode = models.ForeignKey("Team", on_delete=models.CASCADE)
     languageUsed = models.CharField(max_length=256, null=False)
     timeOfSubmission = models.DateTimeField(auto_now_add=True)
     points = models.PositiveIntegerField(default=None, blank=True, null=True)
     checkedOrNot = models.BooleanField(default=False)
     file = models.FileField(upload_to='solutions/')
-    checkedBy = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
+    checkedBy = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.teamCode.teamName + " " + self.roundId.roundName
 
 
 class Transaction(models.Model):
@@ -117,6 +125,9 @@ class Transaction(models.Model):
     changeAmount = models.BigIntegerField()
     previousBalance = models.BigIntegerField()
 
+    def __str__(self):
+        return self.team.teamName + " " + self.message
+
 
 class TeamComponents(models.Model):
     """
@@ -125,6 +136,9 @@ class TeamComponents(models.Model):
     component = models.ForeignKey(Components, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.team.teamName + " " + self.component.componentName
 
 
 class TradeTicket(models.Model):
@@ -147,3 +161,18 @@ class TicketComponents(models.Model):
     ticket = models.ForeignKey(TradeTicket, on_delete=models.CASCADE)
     component = models.ForeignKey(Components, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.component.componentName + " " + self.ticket.team.teamName
+
+
+class SubmissionComponents(models.Model):
+    """
+    Model to store Submission Components
+    """
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    component = models.ForeignKey(Components, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.component.componentName + " " + self.submission.teamCode.teamCode

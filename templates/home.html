@@ -24,7 +24,9 @@
             rel="stylesheet"
     />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous"/>
     <style>
         .arrow-container {
             width: 100px;
@@ -668,7 +670,6 @@
         }
 
         .nav {
-
             position: fixed;
             top: 0;
             left: -310px;
@@ -687,6 +688,7 @@
             position: relative;
             list-style-type: none;
             margin: 150px 0;
+            margin-bottom: 30px;
             padding: 0;
         }
 
@@ -694,7 +696,7 @@
             position: relative;
             display: block;
             position: relative;
-            margin: 2em 0;
+            margin: 1em 0;
         }
 
         .nav ul li a {
@@ -1088,6 +1090,15 @@
                     </li>
                     <li>Teams can trade there components while the competition is going on.</li>
                 </ol>
+                <br><br>
+                <h2>Judgement Criteria</h2>
+
+                <ol>
+                    <li>Submission for all the rounds is necessary. Else team will be disqualified.</li>
+                    <li>The winner will be which will have the most coins at the end of
+                        Round {{ contest.rounds }}</li>
+
+                </ol>
             </div>
         </section>
         <div class="svg">
@@ -1157,9 +1168,9 @@
         {% endif %}
         <footer>
             <div class="contacts">
-                <h3>Contact Details-</h3>
+                <h3>Contact Details</h3>
 
-                <ul>
+                <ul style="font-family:monospace">
                     <li>Mrigank Anand - 8287118974</li>
                     <li>Anant Verma - 7807622599</li>
                 </ul>
@@ -1167,10 +1178,10 @@
             <div class="social">
                 <ul>
                     <li>
-                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.facebook.com/teamexe" target="_blank"><i class="fab fa-facebook"></i></a>
                     </li>
                     <li>
-                        <a href="http://team-exe-website.herokuapp.com/" target="_blank"><i
+                        <a href="https://teamexe.in/" target="_blank"><i
                                 class="fab fa-chrome"></i></a>
                     </li>
                     <li>
