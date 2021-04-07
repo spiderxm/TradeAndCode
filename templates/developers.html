@@ -465,6 +465,9 @@
         .nav ul li.active a and .nav ul li.active button {
             color: white;
         }
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
 
         .nav ul li:not(.active)::after {
             opacity: 0.2;
@@ -490,6 +493,23 @@
                     to(black)
             );
             background-image: linear-gradient(to right, grey, black);
+        }
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
     <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">

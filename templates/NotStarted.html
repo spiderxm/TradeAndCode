@@ -33,6 +33,9 @@
             transform: translate(-50%, -50%);
             padding: 30px 50px;
         }
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
 
         .box .box__ghost {
             padding: 15px 25px 25px;
@@ -343,6 +346,23 @@
             100% {
                 opacity: 0.2;
             }
+        }
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>

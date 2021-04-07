@@ -709,7 +709,7 @@
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 0.4em;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.75);
         }
 
 
@@ -860,26 +860,30 @@
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 0.4em;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, .75);
         }
 
 
         .logout-button:hover, .logout-button:focus {
             outline: none;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 1);
         }
 
         .nav ul li.active a and .nav ul li.active button {
             color: white;
         }
 
+         .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+
         .nav ul li:not(.active)::after {
             opacity: 0.2;
         }
 
-        .nav ul li:not(.active):hover a {
-            color: rgba(255, 255, 255, 0.75);
-        }
+
 
         .nav ul li::after {
             content: "";

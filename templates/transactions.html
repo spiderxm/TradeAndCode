@@ -295,6 +295,10 @@
             color: rgba(255, 255, 255, 0.75);
         }
 
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
         .nav ul li.active a and .nav ul li.active button {
             color: white;
         }
@@ -323,6 +327,23 @@
                     to(black)
             );
             background-image: linear-gradient(to right, grey, black);
+        }
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>

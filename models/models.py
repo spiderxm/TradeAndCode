@@ -77,6 +77,7 @@ class Team(models.Model):
     teamName = models.CharField(unique=True, max_length=256)
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     coins = models.BigIntegerField(default=10000)
+    disqualified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.teamName

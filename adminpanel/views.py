@@ -1,12 +1,14 @@
 import uuid
 from datetime import datetime
 
+from django.db.models import Max
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from .forms import ContestForm, ComponentsForm, RoundForm, QuestionForm, ContestFormForEdit, SubmissionForm, \
     priceUpdateForm
-from models.models import Contest, Round, Question, Components, Submission, Transaction
+from models.models import Contest, Round, Question, Components, Submission, Transaction, SubmissionComponents, \
+    PlayerTeam, Team
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -351,12 +353,19 @@ class CheckSubmission(LoginRequiredMixin, PermissionRequiredMixin, View):
         file.close()
         code = str(content, 'utf-8').split("\n")
         Code = [" " + codeline for i, codeline in enumerate(code) if codeline is not ""]
+        components = SubmissionComponents.objects.filter(submission=submission)
+        transactions = Transaction.objects.all().filter(
+            team=submission.teamCode).order_by('-datetime')
+        playerTeams = PlayerTeam.objects.filter(team=submission.teamCode)
         context = {
             "form": form,
             "submission": submission,
             "docTitle": "Check Submission",
             "question": question,
-            "code": Code
+            "code": Code,
+            "components": components,
+            "transactions": transactions,
+            "players": playerTeams
         }
         return render(request, "update/checkSubmission.html", context=context)
 
@@ -423,3 +432,21 @@ class UpdateComponentsPrice(LoginRequiredMixin, PermissionRequiredMixin, View):
                 component.componentPrice = int(float(component.componentPrice) / float(data["factor"]))
             component.save()
         return HttpResponseRedirect(reverse_lazy('ContestsList'))
+
+
+class LeaderBoardView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    """
+    View for Updating prices for components at one go
+    """
+    permission_required = "auth.admin"
+
+    def get(self, request):
+        if len(Contest.objects.all()) == 0:
+            return HttpResponseRedirect(reverse_lazy('home'))
+        contest = Contest.objects.all()[0]
+
+        maxcoins = Team.objects.all().filter(contest=Contest.objects.all()[0]).aggregate(Max('coins'))
+        return render(request, template_name="detail/leaderboard.html", context={
+            "teams": Team.objects.all().filter(contest=Contest.objects.all()[0]).order_by("-coins"),
+            "maxcoins": maxcoins['coins__max']
+        })

@@ -475,6 +475,9 @@
                 width: 40px;
             }
         }
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
 
         .logout-button {
             background-color: transparent;
@@ -524,6 +527,23 @@
                     to(black)
             );
             background-image: linear-gradient(to right, grey, black);
+        }
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>
@@ -584,6 +604,7 @@
                     class="highlight"
                     style="
               padding: 5px 0;
+              border-radius: 10px;
               padding-left: 50px;
               background: rgba(0, 0, 0, 0.253);
             "
@@ -591,7 +612,7 @@
                 <h6>Test - Input</h6>
                 <p style="white-space: pre">{{ question.input }}</p>
                 <h6>Sample - Output</h6>
-                <p style="white-space: pre"> {{ question.output }}</p>
+                <p style="white-space: pre">{{ question.output }}</p>
             </div>
         </div>
         {% if submission is False %}

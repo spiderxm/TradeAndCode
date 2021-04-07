@@ -10,6 +10,9 @@
     />
     <title>Create Team</title>
     <style>
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
         body {
             background: #2b0000;
             display: flex;
@@ -119,6 +122,23 @@
         .input-group input:focus {
             -webkit-box-shadow: 0 1px 0 0 white;
             box-shadow: 0 1px 0 0 white;
+        }
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>

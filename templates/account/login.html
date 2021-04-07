@@ -302,7 +302,8 @@
             );
             background-image: linear-gradient(to right, grey, black);
         }
-         @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
         .menu {
             position: fixed;
@@ -523,6 +524,9 @@
             background-image: linear-gradient(to right, grey, black);
         }
 
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
     </style>
 </head>
 <body>
@@ -578,7 +582,7 @@
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
-    <div class="socialaccount_ballot">
+    <div class="socialaccount_ballot" style="z-index: 0">
 
         {% include "socialaccount/snippets/provider_list.html" with process="login" %}
 

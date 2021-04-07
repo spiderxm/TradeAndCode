@@ -1,11 +1,12 @@
 from django.urls import path, include
 from .views import CreateContest, GetContests, UpdateContest, DeleteContest, ContestDetails, UpdateRoundDetails, \
     RoundDetails, UpdateQuestion, CreateComponents, UpdateComponents, DeleteComponent, CheckSubmission, \
-    UpdateComponentsPrice
+    UpdateComponentsPrice, LeaderBoardView
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', GetContests, name="ContestsList"),
+    path('leaderBoardView/', LeaderBoardView.as_view(), name="leader-boardView"),
     path('create-contest/', CreateContest.as_view(), name="create-contest"),
     path('update-contest/<str:id>', UpdateContest.as_view(), name="update-contest"),
     path('contest-details/<str:id>', ContestDetails.as_view(), name="contest-details"),

@@ -1,13 +1,8 @@
-{% load humanize %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base/base.html' %}
 
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="icon" href="https://res.cloudinary.com/dvauvcikd/image/upload/v1616341057/Bull_wfcnvi.png">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Leader Board</title>
+{% load humanize %}
+
+{% block css %}
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
@@ -20,13 +15,14 @@
         }
 
         body {
-            background: rgb(13, 164, 175);
+            background:white;
             color: white;
             overflow-x: hidden;
         }
 
         h1 {
             width: 100%;
+            color: rgba(0,0,0,.7);
             margin-bottom: 10px;
             align-items: center;
             text-align: center;
@@ -164,7 +160,7 @@
             max-height: 10px;
         }
 
-         @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
         .menu {
             position: fixed;
@@ -280,7 +276,7 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: rgb(13, 164, 175);
+            background-color: white;
             font-size: 0.8em;
             -webkit-transition: left 500ms ease;
             transition: left 500ms ease;
@@ -384,7 +380,8 @@
             );
             background-image: linear-gradient(to right, grey, black);
         }
-          .nav ul li:not(.active):hover a {
+
+        .nav ul li:not(.active):hover a {
             color: rgba(255, 255, 255, 1);
             transform: scale(1.01);
         }
@@ -402,94 +399,51 @@
             color: rgba(255, 255, 255, 1);
         }
     </style>
-</head>
-
-<body>
+{% endblock %}
 
 
-<input type="checkbox" id="menu"/>
-<label for="menu" class="menu">
-    <span></span>
-    <span></span>
-    <span></span>
-</label>
-<nav class="nav" style="overflow-y: scroll">
-    <ul>
-        <img style="margin-left: 10%; margin-top: -35%; margin-bottom: -10%" width="80%"
-             src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"/>
+{% block content %}
 
-        {% if user.is_authenticated == False %}
-            <li class="#"><a href="accounts/login">Login</a></li>
-        {% endif %}
-        <li class="active"><a href="{% url 'leaderboard' %}">LeaderBoard</a></li>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'register' %}">Team</a></li>
-        <li><a href="{% url 'market' %}">Market</a></li>
-        <li><a href="{% url 'rounds' %}">Rounds</a></li>
-        <li><a href="{% url 'inventory' %}">Inventory</a></li>
-        <li><a href="{% url 'trade-portal' %}">Trade portal</a></li>
-        <li><a href="{% url 'transactions' %}">Transactions</a></li>
-        <li><a href="{% url 'developers' %}">Developers</a></li>
-        {% if user.is_authenticated == True %}
-            <form name="myForm" id="logout-form" method="post" action="{% url 'account_logout' %}">
-                {% csrf_token %}
-                {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                {% endif %}
-                <li class="">
-                    <button type="submit" class="logout-button">
-                        Sign out
-                    </button>
-                </li>
-            </form>
-        {% endif %}
-        <li>
-            <a href="https://web.whatsapp.com/send?text=Come and play Trade and Code Organised by Team .exe NIT Hamirpur on {{ request.build_absolute_uri }}"
-               data-action="share/whatsapp/share" target="_blank" style="text-decoration: none">Share via Whatsapp</a>
-        </li>
 
-    </ul>
-</nav>
-<div class="wrapper">
-    <h1>Trade & Code Leader Board</h1>
+    <div class="wrapper">
+        <h1>Trade & Code Leader Board</h1>
 
-    <hr id="hr2">
-    <div class="lboard_wrap">
-        <div class="lboard_item">
-            {% for team in teams %}
-                <div class="lboard_member" style="overflow-x: scroll">
-                    <div>
-                        <strong style="font-size: 20px; letter-spacing: 1px">
-                            {{ forloop.counter }}.)
-                        </strong>
+        <hr id="hr2">
+        <div class="lboard_wrap">
+            <div class="lboard_item">
+                {% for team in teams %}
+                    <div class="lboard_member" style="overflow-x: scroll">
+                        <div>
+                            <strong style="font-size: 20px; letter-spacing: 1px">
+                                {{ forloop.counter }}.)
+                            </strong>
+                        </div>
+                        <div class="name_bar">
+                            <p><span></span>{{ team.teamName }}
+                                - {{ team.createdBy.first_name }} {{ team.createdBy.last_name }}</p>
+                            <div class="bar_wrap">
+                                <div class="inner_bar" style="width: {% widthratio team.coins maxcoins 100 %}%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="points">{{ team.coins|intcomma }}</div>
                     </div>
-                    <div class="name_bar">
-                        <p><span></span>{{ team.teamName }}
-                            - {{ team.createdBy.first_name }} {{ team.createdBy.last_name }}</p>
-                        <div class="bar_wrap">
-                            <div class="inner_bar" style="width: {% widthratio team.coins maxcoins 100 %}%">
+                {% empty %}
+                    <div class="lboard_member">
+                        <div class="image">
+                        </div>
+                        <div class="name_bar">
+                            <p>No Team Present</p>
+                            <div class="bar_wrap">
+                                <div class="inner_bar" style="width: 10%">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="points">{{ team.coins|intcomma }}</div>
-                </div>
-            {% empty %}
-                <div class="lboard_member">
-                    <div class="image">
-                    </div>
-                    <div class="name_bar">
-                        <p>No Team Present</p>
-                        <div class="bar_wrap">
-                            <div class="inner_bar" style="width: 10%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
 
+            </div>
         </div>
     </div>
-</div>
-</body>
 
-</html>
+{% endblock %}

@@ -370,6 +370,9 @@
             display: none;
         }
     }
+    ::-webkit-scrollbar {
+            width: 0px;
+        }
 
     @media screen and (max-width: 768px) {
         .row {
@@ -377,6 +380,25 @@
             flex-direction: column;
         }
     }
+
+
+      .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
+        }
 </style>
 <body>
 <div class="logo"><img src="https://res.cloudinary.com/dvrvsq95h/image/upload/v1616342694/transparent_logo_ssvk91.png"

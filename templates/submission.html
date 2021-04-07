@@ -18,7 +18,9 @@
             font-weight: lighter;
             -webkit-font-smoothing: antialiased;
         }
-
+::-webkit-scrollbar {
+            width: 0px;
+        }
         html {
             background-color: rgb(17, 51, 51);
             overflow-y: scroll;
@@ -431,6 +433,24 @@
 
         .button-group .form2 {
             width: 90%;
+        }
+
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>

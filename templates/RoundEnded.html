@@ -53,10 +53,31 @@
             }
         }
 
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
         .blink {
             animation-name: blink;
             animation-duration: 1s;
             animation-iteration-count: infinite;
+        }
+          .nav ul li:not(.active):hover a {
+            color: rgba(255, 255, 255, 1);
+            transform: scale(1.01);
+        }
+
+        .logout-button {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .nav ul li a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .logout-button:hover, .logout-button:focus {
+            outline: none;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>

@@ -206,8 +206,8 @@ def createTeam(request):
         teamName = str(teamName).upper()
         if len(Team.objects.all().filter(teamName=str(teamName).strip(), contest=Contest.objects.all()[0])) == 0:
             team = Team.objects.create(
-                teamName=teamName,
-                teamCode=teamName + str(uuid.uuid1())[:5],
+                teamName=teamName.strip(),
+                teamCode=teamName.replace(" ", "-").strip() + str(uuid.uuid1())[:5],
                 contest=contest,
                 createdBy=request.user,
                 coins=contest.money_at_start
